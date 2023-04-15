@@ -17,7 +17,7 @@ function LandingPage() {
 
 
             </div>
-            <div className="landing__page-container">
+            <div className="landing__page-container" style={{marginTop:"1px"}}>
                 <div className="landing__page-image">
                     <img src={background} alt="" />
                 </div>
@@ -37,31 +37,35 @@ function LandingPage() {
                     </div>
                 </div>
             </div>
-            <div className="landing__page-connections">
-                <div className="connections__page-header">
-                    <h3>Trusted By More Than 100+ companies</h3>
-                </div>
-                <div className="connections__page-holder">
-                    <div className="connections__image">
-                        <img src={connect1} alt="" />
-                    </div>
-                    <div className="connections__image">
-                        <img src={connect2} alt="" />
-                    </div>
-                    <div className="connections__image">
-                        <img src={connect3} alt="" />
-                    </div>
-                    <div className="connections__image">
-                        <img src={connect4} alt="" />
-                    </div>
-                    <div className="connections__image">
-                        <img src={connect5} alt="" />
-                    </div>
-                    <div className="connections__image">
-                        <img src={connect6} alt="" />
-                    </div>
-                </div>
-            </div>
+            <div class="landing__page-connections container"  style={{marginTop:"3px"}}>
+  <div class="row connections__page-header container">
+    <div class="col">
+      <h3>Trusted By More Than 100+ companies</h3>
+    </div>
+  </div>
+  <div class="row connections__page-holder">
+    <div class="col-sm-4 col-md-2 connections__image">
+      <img src={connect1} alt="" />
+    </div>
+    <div class="col-sm-4 col-md-2 connections__image">
+      <img src={connect2} alt="" />
+    </div>
+    <div class="col-sm-4 col-md-2 connections__image">
+      <img src={connect3} alt="" />
+    </div>
+    <div class="col-sm-4 col-md-2 connections__image">
+      <img src={connect4} alt="" />
+    </div>
+    <div class="col-sm-4 col-md-2 connections__image">
+      <img src={connect5} alt="" />
+    </div>
+    <div class="col-sm-4 col-md-2 connections__image">
+      <img src={connect6} alt="" />
+    </div>
+  </div>
+</div>
+
+            
         </section>
         <Footer/>
     </>

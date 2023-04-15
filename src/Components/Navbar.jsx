@@ -1,22 +1,42 @@
 import React from 'react';
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function Navbar() {
   return (
-    <div style={{margin: "20px 0", marginTop:"0"}}>
-    <nav className="navbar navbar-light bg-light" style={{backgroundColor: "black", height: "50px", margin: "10px 0"}}>
-      <div className="container-fluid" style={{display: "flex", justifyContent: "space-between"}}>
-        <Link className="navbar-brand" to="/"style={{color: "white", marginTop: "13px", fontWeight:"bold",marginLeft:"10px"}}>Rahisisha</Link>
-        <div style={{marginTop:"13px", marginRight:"10px"}}>
-          <Link className="navbar-brand" to="/signup" style={{marginRight: "10px", color: "white"}}>Get Started</Link>
-          <Link className="navbar-brand" to="/login" style={{color: "white"}}>Login</Link>
+    <div className="container-fluid bg-black">
+      <nav className="navbar navbar-expand-lg navbar-light  container">
+        <Link className="navbar-brand" to="/" style={{ fontWeight: 'bold',color:"white" }}>
+          Rahisisha
+        </Link>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span className="navbar-toggler-icon"></span>
+        </button>
+        <div className="collapse navbar-collapse" id="navbarNav">
+          <ul className="navbar-nav ms-auto">
+            <li className="nav-item">
+              <Link className="nav-link" style={{color:"white" }} to="/signup">
+                Get Started
+              </Link>
+            </li>
+            <li className="nav-item">
+              <Link className="nav-link" style={{color:"white" }} to="/login">
+                Login
+              </Link>
+            </li>
+          </ul>
         </div>
-      </div>
-    </nav>
-  </div>
-  
-  
-  )
+      </nav>
+    </div>
+  );
 }
 
 export default Navbar;
