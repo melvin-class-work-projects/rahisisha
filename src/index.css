@@ -14,9 +14,11 @@
   --color-white: #fff;
   --color-black: #0f0f0f;
   --color-black-light: rgba(54, 54, 54, 0.8);
-  --color-blue: #062344;
+  --color-blue: #154d8d;
   --color-blue-light: #57d6df;
   --color-secondary: #ff5b0f;
+  --color-red: #ff0f0f;
+  --color-yellow: #fdba00;
 
   --transition: all 500ms ease;
 
