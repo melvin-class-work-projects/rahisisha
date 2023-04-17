@@ -1,6 +1,8 @@
 import React from 'react'
 import './home.css'
 import { AiFillEdit } from 'react-icons/ai'
+import { RiMessage3Line } from 'react-icons/ri'
+import { HiOutlineUsers } from 'react-icons/hi'
 import { BsPlayCircle } from 'react-icons/bs'
 import { TbPhotoCheck } from 'react-icons/tb'
 import { BiCalendar } from 'react-icons/bi'
@@ -38,7 +40,7 @@ function HomePage() {
                   </div>
                   <div className="profile__body-icon">
                     <div className="icon__profile">
-                      <AiFillEdit/>
+                      <RiMessage3Line/>
                     </div>
                     <div className="content__profile">
                       <strong>Messages</strong>
@@ -46,7 +48,7 @@ function HomePage() {
                   </div>
                   <div className="profile__body-icon">
                     <div className="icon__profile">
-                      <AiFillEdit/>
+                      <HiOutlineUsers/>
                     </div>
                     <div className="content__profile">
                       <strong>Community</strong>
