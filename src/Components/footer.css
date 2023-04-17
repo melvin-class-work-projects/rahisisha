@@ -2,6 +2,7 @@
     background: var(--color-black);
     color: var(--color-white);
     cursor: default;
+    margin-top: 5px;
 }
 
 .footer__container {
@@ -10,7 +11,7 @@
     grid-template-columns: repeat(3, 1fr);
     gap: 6rem;
     padding: 3rem;
-}
+    }
 
 .footer__container-contact {
     display: flex;
