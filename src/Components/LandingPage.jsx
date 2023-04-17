@@ -8,6 +8,8 @@ import connect4 from '../Assets/connect-4.png'
 import connect5 from '../Assets/connect-5.png'
 import connect6 from '../Assets/connect-6.png'
 import Footer from './Footer'
+import { Ai } from 'react-icons/ai';
+
 
 function LandingPage() {
   return (
