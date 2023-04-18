@@ -1,6 +1,7 @@
 .profile__page-container {
     display: grid;
     place-items: center;
+    margin-top: 4rem;
 }
 .profile__page-content {
     width: var(--container-width-lg);
@@ -101,6 +102,7 @@
     display: grid;
     place-items: center;
     margin-top: 2rem;
+    margin-bottom: 2rem;
 }
 .profile__page-active {
     background: var(--color-black-light);
