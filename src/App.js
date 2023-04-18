@@ -9,6 +9,7 @@ import HomePage from './Components/HomePage';
 import Profile from './Components/Profile';
 import Admin from './Components/Admin';
 import Post from './Components/Post';
+import Community from './Components/Community';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
     <Route path="/profile" element={<Profile/>} />
     <Route path='/home' element={<HomePage/>}/>
     <Route path='/admin' element={<Admin/>}/>
+    <Route path='/community' element={<Community/>}/>
     <Route path='/manage/posts' element={<Post/>}/>
   
     </Routes>
