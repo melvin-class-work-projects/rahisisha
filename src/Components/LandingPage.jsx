@@ -15,9 +15,23 @@ function LandingPage() {
   return (
     <>
         <section className="landing__page">
-            <div className="landing__page-circle">
-
-
+            <div className="landing__page-circle" style={{display:'flex'}}>
+            
+              <div style={{marginTop:"130px",display:"flex", marginLeft:"30%"}}>
+               
+              <div>
+                
+             <input type="text" placeholder='job or keyword'  style={{border:"2px solid white",width:"280px",height:"40px" }}/>
+             </div>
+             <div>
+              
+              <input type="text" placeholder='location' style={{border:"2px solid white",width:"250px",height:"40px", marginLeft:"3px" }} />
+             </div>
+             <div>
+              
+              <button style={{border:"2px solid black",width:"100px",height:"40px", padding:"5px",color:"white",backgroundColor:"black", marginLeft:"6px" }}>Search</button>
+             </div>
+            </div>
             </div>
             <div className="landing__page-container" style={{marginTop:"1px"}}>
                 <div className="landing__page-image">
