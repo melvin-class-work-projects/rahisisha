@@ -19,7 +19,8 @@ const customStyles = {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      width: '50rem'
+      width: '50rem',
+      border: '3px solid black'
     },
   };
 
@@ -117,7 +118,7 @@ function Community() {
                             <HiOutlineUsers/>
                             </div>
                             <div className="content__profile">
-                            <Link to='notificaion'>Notifications</Link>
+                            <Link to='/notificaion'>Notifications</Link>
                             </div>
                         </div>
                         </div>
