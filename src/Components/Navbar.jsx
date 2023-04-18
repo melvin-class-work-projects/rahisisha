@@ -25,14 +25,14 @@ function Navbar() {
           <ul className="navbar-nav ms-auto">
             <div>
             <li className="nav-item">
-              <Link className="nav-link " style={{color:"white", border:"2px solid #61dafb", backgroundColor:"#61dafb", borderRadius:"10px" }} to="/signup">
+              <Link className="nav-link " style={{color:"white", border:"2px solid --color-blue-light", backgroundColor:"#61dafb", borderRadius:"10px" }} to="/signup">
                 Get Started
               </Link>
             </li>
             </div>
             <div>
             <li className="nav-item">
-              <Link className="nav-link" style={{color:"white", border:"2px solid #61dafb", borderRadius:"10px", backgroundColor:"#61dafb", marginLeft:"5px" }} to="/login">
+              <Link className="nav-link" style={{color:"white", border:"2px solid --color-blue-light", borderRadius:"10px", backgroundColor:"#61dafb", marginLeft:"5px" }} to="/login">
                 Login
               </Link>
             </li>
