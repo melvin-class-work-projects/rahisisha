@@ -1,10 +1,40 @@
 import React from 'react'
+import { useState } from 'react'
 import './community.css'
 import { AiFillEdit } from 'react-icons/ai'
 import { RiMessage3Line } from 'react-icons/ri'
 import { HiOutlineUsers } from 'react-icons/hi'
+import { MdOutlineMarkEmailUnread } from 'react-icons/md'
+import { HiOutlineLocationMarker } from 'react-icons/hi'
+import { BiUser } from 'react-icons/bi'
+import { BsTelephone } from 'react-icons/bs'
+import Modal from 'react-modal'
+import { Link } from 'react-router-dom'
+
+const customStyles = {
+    content: {
+      top: '50%',
+      left: '50%',
+      right: 'auto',
+      bottom: 'auto',
+      marginRight: '-50%',
+      transform: 'translate(-50%, -50%)',
+      width: '50rem'
+    },
+  };
 
 function Community() {
+    let subtitle;
+    const [modalIsOpen, setIsOpen] = useState(false);
+
+    function openModal() {
+        setIsOpen(true);
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
   return (
     <>
         <section className="community__page">
@@ -30,15 +60,56 @@ function Community() {
                             <AiFillEdit/>
                             </div>
                             <div className="content__profile">
-                            <strong>Edit Profile</strong>
-                            </div>
-                        </div>
-                        <div className="profile__body-icon">
-                            <div className="icon__profile">
-                            <RiMessage3Line/>
-                            </div>
-                            <div className="content__profile">
-                            <strong>Messages</strong>
+                            <strong onClick={openModal}>Edit Profile</strong>
+                            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
+                                <div className="modal__header">
+                                    <strong ref={(_subtitle) => (subtitle = _subtitle)}>Edit Your Profile</strong>
+                                </div>
+                                <div className="modal__body">
+                                    <form action="" className="form__modal">
+                                        <div className="form__group">
+                                            <div className="form__group-header">
+                                                <BiUser/>
+                                                <label htmlFor="">Enter Full Name</label>   
+                                            </div>
+                                            <div className="form__group-input">
+                                                <input type="text" placeholder='Enter your current email'/>
+                                            </div>
+                                        </div>
+                                        <div className="form__group">
+                                            <div className="form__group-header">
+                                                <MdOutlineMarkEmailUnread/>
+                                                <label htmlFor="">Email</label>                                            
+                                            </div>
+                                            <div className="form__group-input">
+                                                <input type="text" placeholder='Enter your current email'/>
+                                            </div>
+                                        </div>
+                                        <div className="form__group">
+                                            <div className="form__group-header">
+                                                <HiOutlineLocationMarker/>
+                                                <label htmlFor="">Location</label>                                            
+                                            </div>
+                                            <div className="form__group-input">
+                                                <input type="text" placeholder='Enter your current email'/>
+                                            </div>
+                                        </div>
+                                        <div className="form__group">
+                                            <div className="form__group-header">
+                                                <BsTelephone/>
+                                                <label htmlFor="">Phone number</label>                                           
+                                            </div>
+                                            <div className="form__group-input">
+                                                <input type="text" placeholder='Enter your current email'/>
+                                            </div>
+                                        </div>
+                                        <div className="form__group-button">
+                                            <button className="form__group-save">Save</button>
+                                        </div>
+
+                                    </form>
+                                </div>
+                            </Modal>
                             </div>
                         </div>
                         <div className="profile__body-icon">
@@ -46,7 +117,7 @@ function Community() {
                             <HiOutlineUsers/>
                             </div>
                             <div className="content__profile">
-                            <strong>Community</strong>
+                            <Link to='notificaion'>Notifications</Link>
                             </div>
                         </div>
                         </div>
