@@ -7,6 +7,8 @@ import Login from './Components/Login'
 import LandingPage from './Components/LandingPage'
 import HomePage from './Components/HomePage';
 import Profile from './Components/Profile';
+import Admin from './Components/Admin';
+import Post from './Components/Post';
 
 function App() {
   return (
@@ -18,6 +20,9 @@ function App() {
     <Route path="/login" element={<Login />} />
     <Route path="/profile" element={<Profile/>} />
     <Route path='/home' element={<HomePage/>}/>
+    <Route path='/admin' element={<Admin/>}/>
+    <Route path='/manage/posts' element={<Post/>}/>
+  
     </Routes>
     </div>
   );

@@ -35,7 +35,7 @@ function LandingPage() {
                         </div>
                     </div>
                     <div className="landing__page-button">
-                        <button className="landing-btn">Get Started</button>
+                        <button className="landing-btn ">Get Started</button>
                     </div>
                 </div>
             </div>
