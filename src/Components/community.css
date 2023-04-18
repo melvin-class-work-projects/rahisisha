@@ -19,11 +19,13 @@
     box-shadow: 0.5rem 0.5rem 1.5rem 1.5rem var(--color-black-light);
     display: grid;
     place-items: center;
+    padding: 1rem;
 }
 .community__card-list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     padding: 1rem;
+    margin-bottom: 0.5rem;
 }
 .community__card-avatar {
     width: 8rem;
