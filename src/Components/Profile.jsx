@@ -1,8 +1,35 @@
 import React from 'react'
 import './profile.css'
 import { TbEdit } from 'react-icons/tb'
+import { useState } from 'react'
+import Modal from 'react-modal'
+
+const customStyles = {
+  content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
+    width: '50rem',
+    border: '3px solid black'
+  },
+};
 
 function Profile() {
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [workIsOpen, setWorkIsOpen] = useState(false);
+  const [skillIsOpen, setSkillIsOpen] = useState(false);
+
+  function openModal() {
+      setIsOpen(true);
+  }
+
+  function closeModal() {
+      setIsOpen(false);
+  }
   return (
     <>
     <section className="profile__page">
@@ -22,7 +49,8 @@ function Profile() {
               <span>Software Engineer</span>
               <div className="profile__about">
                 <span>Nairobi, Kenya</span>
-                <button>Contact info</button>
+                <h5 onClick={openModal}>Contact info</h5>
+                <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
               </div>
             </div>
           </div>
@@ -38,6 +66,7 @@ function Profile() {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam quidem porro reprehenderit iure, corporis qui.
               </span>
             </div>
+            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
           </article>
           <article className="edit__work">
             <div className="edit__header">
@@ -49,6 +78,7 @@ function Profile() {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam quidem porro reprehenderit iure, corporis qui.
               </span>
             </div>
+            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
           </article>
           <article className="edit__work">
             <div className="edit__header">
@@ -60,6 +90,7 @@ function Profile() {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam quidem porro reprehenderit iure, corporis qui.
               </span>
             </div>
+            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
           </article>
         </div>
         <div className="profile__page-activity">

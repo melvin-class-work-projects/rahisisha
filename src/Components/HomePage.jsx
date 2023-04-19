@@ -133,7 +133,7 @@ function HomePage() {
                       <HiOutlineUsers/>
                     </div>
                     <div className="content__profile">
-                      <Link to='/notificatio'>Notifications</Link>
+                      <Link to='/notification'>Notifications</Link>
                     </div>
                   </div>
                 </div>
