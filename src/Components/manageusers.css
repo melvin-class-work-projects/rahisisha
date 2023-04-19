@@ -1,0 +1,26 @@
+.table__body table th, td {
+    padding-left:7rem;
+}
+.admin__edit {
+    background: var(--color-black);
+    width: 5rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    transition: var(--transition);
+}
+.admin__edit:hover {
+    background: var(--color-blue-light);
+}
+.admin__delete {
+    background: var(--color-black);
+    width: 5rem;
+    font-weight: bold;
+    border-radius: 1rem;
+    transition: var(--transition);
+}
+.admin__delete:hover {
+    background: var(--color-secondary);
+}
+.table__body {
+    padding: 1rem;
+}
