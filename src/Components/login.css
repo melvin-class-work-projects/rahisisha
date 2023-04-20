@@ -1,0 +1,5 @@
+.overlay {
+    display: grid;
+    place-items: center;
+    margin-left: -17rem;
+}

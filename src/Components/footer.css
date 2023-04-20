@@ -91,6 +91,9 @@
 /* ===== Small Devices ===== */
 
 @media screen and (max-width: 600px) {
+    .footer__section {
+        width: 100vw;
+    }
     .footer__container {
         grid-template-columns: 1fr;
     }

@@ -24,3 +24,9 @@
 .table__body {
     padding: 1rem;
 }
+
+@media screen and (max-width: 1024px) {
+    .table__body table th, td {
+        padding-left:2rem;
+    }
+}
