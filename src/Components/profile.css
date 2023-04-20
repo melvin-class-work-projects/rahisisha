@@ -152,3 +152,64 @@
     background: var(--color-secondary);
     color: var(--color-black);
 }
+
+@media screen and (max-width: 1024px) {
+    .profile__page-avatar {
+        width: 15rem;
+        height: 15rem;
+        margin-top: -10rem;
+        margin-left: 13rem;
+    }
+    .profile__page-background {
+        height: 20rem;
+        width: var(--container-width-df);
+    } 
+    .profle__page-edit {
+        width: var(--container-width-lg);
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .profle__page-edit article {
+        width: 18rem;
+    }
+    .edit__header {
+        gap: 5rem;
+    }
+    .profile__page-active {
+        grid-template-columns: 1fr;
+    }
+    .profile__card-body {
+        display: grid;
+        text-align: center;
+    }
+    .profile__card-about {
+        margin: 0;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .profle__page-edit {
+        width: var(--container-width-lg);
+        grid-template-columns: 1fr;
+    }
+    .profile__page-avatar {
+        width: 8rem;
+        height: 8rem;
+        margin-top: -5rem;
+        margin-left: 5rem;
+    }
+    .profile__page-background {
+        height: 10rem;
+        width: var(--container-width-df);
+    } 
+    .profile__card-body {
+        font-size: 1rem;
+    }
+    .profile__page-active {
+        width: var(--container-width-df);
+    }
+    .profile__page-activity article{
+        width: var(--container-width-df);
+        height: fit-content;
+        margin-bottom: 1rem;
+    }
+}

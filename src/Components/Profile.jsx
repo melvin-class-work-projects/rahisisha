@@ -70,7 +70,7 @@ function Profile() {
           </article>
           <article className="edit__work">
             <div className="edit__header">
-              <h4>Work</h4>
+              <h4>Company</h4>
               <TbEdit/>
             </div>
             <div className="edit__content">
@@ -82,7 +82,7 @@ function Profile() {
           </article>
           <article className="edit__work">
             <div className="edit__header">
-              <h4>Work</h4>
+              <h4>Skills</h4>
               <TbEdit/>
             </div>
             <div className="edit__content">

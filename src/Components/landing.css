@@ -36,6 +36,7 @@
     border-radius: 2rem;
     border: 2px solid var(--color-black);
     transition: var(--transition);
+    width: 10rem;
  }
  
  
@@ -91,6 +92,9 @@
         gap: 2rem;
         margin-left: 4rem;
     }
+    .landing__page-circle {
+      display: none;
+    }
     .landing__page-connections {
         margin-left: 1rem;
     }
@@ -128,11 +132,32 @@
  
  
  @media screen and (max-width: 600px) {
+   .landing__page-container {
+      display: grid;
+      place-items: center;
+      width: var(--container-width-df);
+      margin-left: -0.1rem;
+   }
+   .landing__page-image {
+      width: 20rem;
+      overflow: hidden;
+   }
+   .landing__page-image img{
+      width: 20rem;
+   }
     .connections__page-holder {
         grid-template-columns: repeat(2, 1fr);
     }
     .landing__page-circle {
-        display: none;
+      display: none;
+    }
+    .content__header {
+      text-align: center;
+      margin-left: 2rem;
+    }
+    .content__body {
+      text-align: center;
+      margin-left: 2rem;
     }
  }
  

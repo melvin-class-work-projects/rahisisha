@@ -9,23 +9,12 @@ function Signup() {
     <form className="signup-form">
       <h3 style={{color:'white'}}>Sign Up</h3>
       <div className="form-group">
-        <label style={{color:'white'}} htmlFor="name">Name:</label>
+        <label style={{color:'white'}} htmlFor="name">Username:</label>
         <input
           type="text"
           id="name"
           name="username"
           // value={formData.username}
-          // onChange={handleChange}
-        />
-      </div>
-  
-      <div className="form-group">
-        <label style={{color:'white'}} htmlFor="email">Email:</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          // value={formData.email}
           // onChange={handleChange}
         />
       </div>
@@ -58,6 +47,7 @@ function Signup() {
           {/* <option value="admin">Admin</option> */}
           <option value="user">Job Seeker</option>
           <option value="employer">Employer</option>
+          <option value="employer">Admin</option>
         </select>
       </div>
   
