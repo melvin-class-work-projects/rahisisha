@@ -15,7 +15,7 @@ import Community from './Components/Community';
 function App() {
   return (
     <div className="App">
-    {/* <Navbar/> */}
+     <Navbar/> 
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/signup" element={<Signup />} />
