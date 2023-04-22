@@ -1,5 +1,5 @@
 import React from 'react'
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import './home.css'
 import { AiFillEdit } from 'react-icons/ai'
 import { RiMessage3Line } from 'react-icons/ri'
@@ -30,9 +30,17 @@ const customStyles = {
 };
 
 
+
 function HomePage() {
   let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [posts, setPosts] = useState()
+
+  useEffect(()=> {
+    fetch('http://backend-ag31.onrender.com//posts')
+    .then(res => res.json())
+    .then(data => setPosts(data))
+  }, [])
 
   function openModal() {
       setIsOpen(true);
@@ -174,35 +182,40 @@ function HomePage() {
               </div>
             </div>
             <div className="posts__lists">
-              <article className="posts__lists-card">
-                <div className="posts__card-profile">
-                  <div className="card__profile-avatar">
-                    <img src="https://images.pexels.com/photos/14041401/pexels-photo-14041401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
-                  </div>
-                  <div className="card__profile-about">
-                    <h5>Mid-Senior Software Engineer</h5>
-                    <small>Nairobi, Kenya</small>
-                  </div>
-                </div>
-                <div className="profile__card-posts">
-                  <div className="posts__card-content">
-                    <small>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dolorum aut blanditiis rem maiores aperiam a!</small>
-                  </div>
-                  <div className="posts__card-image">
-                    <img src="https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
-                  </div>
-                  <div className="posts__card-buttons">
-                    <div className="buttons__like-card">
-                      <button className="like"><SlLike/></button>
-                      <h5>Like</h5>
+              {
+                posts.map((post)=> {
+                  <article className="posts__lists-card">
+                    <div className="posts__card-profile">
+                      <div className="card__profile-avatar">
+                        <img src="https://images.pexels.com/photos/14041401/pexels-photo-14041401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" alt="" />
+                      </div>
+                      <div className="card__profile-about">
+                        <h5>Mid-Senior Software Engineer</h5>
+                        <small>Nairobi, Kenya</small>
+                      </div>
                     </div>
-                    <div className="buttons__comment-card">
-                      <button className="comment"><FaRegCommentAlt/></button>
-                      <h5>Comment</h5>
+                    <div className="profile__card-posts">
+                      <div className="posts__card-content">
+                        <small>{post.description}</small>
+                      </div>
+                      <div className="posts__card-image">
+                        <img src={post.media} alt="" />
+                      </div>
+                      <div className="posts__card-buttons">
+                        <div className="buttons__like-card">
+                          <button className="like"><SlLike/></button>
+                          <h5>{post.likes}</h5>
+                        </div>
+                        <div className="buttons__comment-card">
+                          <button className="comment"><FaRegCommentAlt/></button>
+                          <h5>Comment</h5>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </article>
+                  </article>
+                })
+              }
+              
             </div>
           </div>
         </div>
