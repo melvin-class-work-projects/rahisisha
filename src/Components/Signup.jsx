@@ -107,6 +107,7 @@ function Signup() {
               value={formData.category}
               onChange={handleChange}
             >
+              <option style={{display:"none"}} value="seeker">Select</option>
               <option value="seeker">Seeker</option>
               <option value="employer">Employer</option>
               <option value="admin">Admin</option>
