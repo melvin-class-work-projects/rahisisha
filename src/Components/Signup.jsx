@@ -21,7 +21,7 @@ function Signup() {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://backend-ag31.onrender.com/users", {
+      const response = await fetch("http://127.0.0.1:3000/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

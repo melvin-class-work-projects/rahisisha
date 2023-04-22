@@ -19,11 +19,11 @@ function Login() {
       const decodedToken = JSON.parse(atob(accessToken.split(".")[1]));
       const userRole = decodedToken.role;
       localStorage.setItem("userRole", userRole);
-      if (userRole === "SEEKER") {
+      if (userRole === "seeker") {
         window.location.href = "/home";
-      } else if (userRole === "EMPLOYER") {
+      } else if (userRole === "employer") {
         window.location.href = "/home";
-      } else if (userRole === "ADMIN") {
+      } else if (userRole === "admin") {
         window.location.href = "/admin"
       }
     } catch (error) {
