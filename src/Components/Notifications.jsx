@@ -10,6 +10,7 @@ import { BiUser } from 'react-icons/bi'
 import { BsTelephone } from 'react-icons/bs'
 import Modal from 'react-modal'
 import { Link } from 'react-router-dom'
+import Navigation from './Navigation'
 
 const customStyles = {
     content: {
@@ -38,6 +39,7 @@ function Notifications() {
 
   return (
     <>
+    <Navigation/>
                 <section className="community__page">
             <div className="community__page-container">
                 <aside className="home__page-profile">

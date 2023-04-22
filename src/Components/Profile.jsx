@@ -3,6 +3,7 @@ import './profile.css'
 import { TbEdit } from 'react-icons/tb'
 import { useState } from 'react'
 import Modal from 'react-modal'
+import Navigation from './Navigation'
 
 const customStyles = {
   content: {
@@ -32,6 +33,7 @@ function Profile() {
   }
   return (
     <>
+    <Navigation/>
     <section className="profile__page">
       <div className="profile__page-container">
         <article className="profile__page-content">

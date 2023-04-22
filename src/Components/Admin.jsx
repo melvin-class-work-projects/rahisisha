@@ -12,6 +12,7 @@ import Modal from 'react-modal'
 import Manageposts from './Manageposts';
 import Manage_employers from './Manage_employers';
 import Manageusers from './Manageusers';
+import Navigation from './Navigation';
 
 const customStyles = {
   content: {
@@ -67,6 +68,7 @@ function Admin() {
   }
     return (
       <>
+      <Navigation/>
        <section className="home__page">
         <div className="home__page-container">
           <aside className="home__page-profile">
