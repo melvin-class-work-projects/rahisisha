@@ -26,10 +26,9 @@ function App() {
     return userRole === 'ADMIN';
   };
 
-  
   return (
     <div className="App">
-      <Navbar />
+      {!isAuthenticated() && <Navbar />}
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/signup" element={<Signup />} />
