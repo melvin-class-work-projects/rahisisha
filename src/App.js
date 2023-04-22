@@ -26,6 +26,7 @@ function App() {
     return userRole === 'ADMIN';
   };
 
+  
   return (
     <div className="App">
       <Navbar />
@@ -52,7 +53,7 @@ function App() {
         <Route
           path="/community"
           element={
-            isAuthenticated() ? <Community /> : <Navigate to="/login" />
+            isAuthenticated() ? <Community /> : <Navigate to="/community" />
           }
         />
         <Route
@@ -61,14 +62,14 @@ function App() {
             isAuthenticated() ? (
               <Notifications />
             ) : (
-              <Navigate to="/login" />
+              <Navigate to="/notification" />
             )
           }
         />
         <Route
           path="/manage/posts"
           element={
-            isAuthenticated() ? <Post /> : <Navigate to="/login" />
+            isAuthenticated() ? <Post /> : <Navigate to="/manage/posts" />
           }
         />
       </Routes>
