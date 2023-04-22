@@ -20,6 +20,12 @@ function App() {
     return accessToken && userRole;
   };
 
+  // Function to check if the userRole in localStorage is "admin"
+  const isAdmin = () => {
+    const userRole = localStorage.getItem('userRole');
+    return userRole === 'admin';
+  };
+
   return (
     <div className="App">
       <Navbar />
@@ -39,7 +45,9 @@ function App() {
         />
         <Route
           path="/admin"
-          element={isAuthenticated() ? <Admin /> : <Navigate to="/login" />}
+          element={
+            isAuthenticated() && isAdmin() ? <Admin /> : <Navigate to="/login" />
+          }
         />
         <Route
           path="/community"
