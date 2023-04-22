@@ -118,7 +118,7 @@ function Notifications() {
                             <HiOutlineUsers/>
                             </div>
                             <div className="content__profile">
-                            <Link to='/notificaion'>Notifications</Link>
+                            <Link to='/community'>Community</Link>
                             </div>
                         </div>
                         </div>
