@@ -31,7 +31,7 @@ function Signup() {
           username: formData.username,
           password: formData.password,
           password_confirmation: formData.passwordConfirm,
-          role: formData.category.toUpperCase(),
+          role: formData.category.toLowerCase(),
         }),
       });
 

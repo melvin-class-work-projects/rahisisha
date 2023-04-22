@@ -23,7 +23,7 @@ function Login() {
         window.location.href = "/home";
       } else if (userRole === "employer") {
         window.location.href = "/home";
-      } else if (userRole === "admin") {
+      } else if (userRole === "ADMIN") {
         window.location.href = "/admin"
       }
     } catch (error) {
