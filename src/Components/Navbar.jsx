@@ -12,10 +12,10 @@ function Navbar() {
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav ms-auto mb-2 mb-lg-0" style={{fontSize: '1.5rem'}}>
             <li className="nav-item">
-              <Link className="nav-link" to="/sign up" style={{color: 'white', fontSize: '1.2rem'}}>Sign up</Link>
+              <Link className="nav-link" to="/signup" style={{color: 'white', fontSize: '1.2rem'}}>Sign up</Link>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/log in" style={{color: 'white', fontSize: '1.2rem'}}>Log in</Link>
+              <Link className="nav-link" to="/login" style={{color: 'white', fontSize: '1.2rem'}}>Log in</Link>
             </li>
           </ul>
         </div>
