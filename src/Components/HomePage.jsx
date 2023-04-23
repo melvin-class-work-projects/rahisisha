@@ -34,31 +34,47 @@ const customStyles = {
 
 
 function HomePage() {
- let subtitle;
- const [modalIsOpen, setIsOpen] = useState(false);
- const [posts, setPosts] = useState();
-
-
- useEffect(() => {
-   fetch("http://127.0.0.1:3000/posts")
-     .then((res) => res.json())
-     .then((data) => setPosts(data));
- }, []);
-
-
- function openModal() {
-   setIsOpen(true);
- }
-
-
- function closeModal() {
-   setIsOpen(false);
- }
- const handleLogout = () => {
-   localStorage.removeItem('accessToken');
- localStorage.removeItem('userRole');
- window.location.href= '/login'
- }
+  let subtitle;
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [posts, setPosts] = useState([]);
+  const [authenticated, setAuthenticated] = useState(false);
+  
+  useEffect(() => {
+  const accessToken = localStorage.getItem('accessToken');
+  if (accessToken) {
+  setAuthenticated(true);
+  fetch("http://127.0.0.1:3000/posts", {
+  headers: {
+  Authorization: `Bearer ${accessToken}`
+  }
+  })
+  .then((res) => {
+  if (res.ok) {
+  return res.json();
+  } else {
+  throw new Error("Network response was not ok");
+  }
+  })
+  .then((data) => setPosts(data))
+  .catch((error) => console.log(error));
+  } else {
+  setAuthenticated(false);
+  }
+  }, []);
+  
+  function openModal() {
+  setIsOpen(true);
+  }
+  
+  function closeModal() {
+  setIsOpen(false);
+  }
+  
+  const handleLogout = () => {
+  localStorage.removeItem('accessToken');
+  localStorage.removeItem('userRole');
+  window.location.href= '/login'
+  }
   return (
    <>
       <Navigation/>

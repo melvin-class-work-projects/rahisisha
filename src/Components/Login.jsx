@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import Footer from "./Footer";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState([]);
   const [accessToken, setAccessToken] = useState(null);
+  const navigate = useNavigate()
 
   useEffect(() => {
     const storedAccessToken = localStorage.getItem("accessToken");
@@ -43,12 +45,14 @@ function Login() {
       });
 
       if (response.ok) {
+        window.location.href= '/home'
         const data = await response.json();
         const accessToken = data.accessToken;
 
         console.log(data)
         localStorage.setItem("accessToken", accessToken);
         setAccessToken(accessToken);
+        
       } else {
         const data = await response.json();
         setErrors(data.errors);
