@@ -1,0 +1,27 @@
+{
+    "posts": [
+      {
+        "id": 1,
+        "post_code": "ABC123",
+        "title": "My First Post",
+        "media": "https://example.com/my-image.jpg",
+        "description": "This is my first post.",
+        "likes": 0,
+        "user_code": "DEF456",
+        "created_at": "2023-04-23T12:34:56.789Z",
+        "updated_at": "2023-04-23T12:34:56.789Z"
+      },
+      {
+        "id": 2,
+        "post_code": "DEF456",
+        "title": "My Second Post",
+        "media": "https://example.com/my-other-image.jpg",
+        "description": "This is my second post.",
+        "likes": 0,
+        "user_code": "GHI789",
+        "created_at": "2023-04-24T01:23:45.678Z",
+        "updated_at": "2023-04-24T01:23:45.678Z"
+      }
+    ]
+  }
+  

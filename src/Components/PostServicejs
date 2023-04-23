@@ -1,0 +1,19 @@
+import axios from 'axios';
+
+const API_URL = 'http://backend-ag31.onrender.com/posts'; // replace with your Rails API URL
+
+export function getPosts() {
+  return axios.get(`${API_URL}/posts`);
+}
+
+export function createPost(data) {
+  return axios.post(`${API_URL}/posts`, data);
+}
+
+export function deletePost(id) {
+  return axios.delete(`${API_URL}/posts/${id}`);
+}
+
+// add more functions as needed for your API endpoints
+
+  

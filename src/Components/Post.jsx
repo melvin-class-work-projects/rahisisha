@@ -1,9 +1,111 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react';
 
 function Post() {
+  const [posts, setPosts] = useState([]);
+  const [newPost, setNewPost] = useState({ title: '', media: '', description: '' });
+
+  useEffect(() => {
+    fetch('/posts', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      }
+    })
+      .then(response => response.json())
+      .then(posts => setPosts(posts));
+  }, []);
+
+  const handleNewPostChange = (event) => {
+    setNewPost({ ...newPost, [event.target.name]: event.target.value });
+  };
+
+  const handleNewPostSubmit = (event) => {
+    event.preventDefault();
+
+    fetch('Backend-ag31.onrender.com/signup/posts', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(newPost),
+    })
+      .then(response => response.json())
+      .then(post => setPosts([...posts, post]));
+
+    setNewPost({ title: '', media: '', description: '' });
+  };
+
+  const handlePostUpdate = (postCode, updatedPost) => {
+    fetch(`http://127.0.0.1:3000//posts/${postCode}`, {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify(updatedPost),
+    })
+      .then(response => response.json())
+      .then(updatedPost => {
+        const index = posts.findIndex(post => post.post_code === postCode);
+        setPosts([
+          ...posts.slice(0, index),
+          updatedPost,
+          ...posts.slice(index + 1),
+        ]);
+      });
+  };
+
+  const handlePostDelete = (postCode) => {
+    fetch(`http://127.0.0.1:3000//posts/${postCode}`, {
+      method: 'DELETE',
+    })
+      .then(() => {
+        const index = posts.findIndex(post => post.post_code === postCode);
+        setPosts([
+          ...posts.slice(0, index),
+          ...posts.slice(index + 1),
+        ]);
+      });
+  };
+
   return (
-    <div>Post</div>
-  )
+    <div>
+      <h1>Posts</h1>
+      <form onSubmit={handleNewPostSubmit}>
+        <label>
+          Title:
+          <input type="text" name="title" value={newPost.title} onChange={handleNewPostChange} />
+        </label>
+        <label>
+          Media:
+          <input type="text" name="media" value={newPost.media} onChange={handleNewPostChange} />
+        </label>
+        <label>
+          Description:
+          <input type="text" name="description" value={newPost.description} onChange={handleNewPostChange} />
+        </label>
+        <button type="submit">Create Post</button>
+      </form>
+      <ul>
+        {posts.map(post => (
+          <li key={post.post_code}>
+            <h2>{post.title}</h2>
+            <p>{post.description}</p>
+            <img src={post.media} alt={post.title} />
+            <form onSubmit={(event) => {
+              event.preventDefault();
+              handlePostUpdate(post.post_code, { likes: post.likes + 1 });
+            }}>
+              <button type="submit">Like ({post.likes})</button>
+            </form>
+            <button onClick={() => handlePostDelete(post.post_code)}>Delete</button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
 }
 
-export default Post;
+export default  Post;
+
