@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from 'react'
 import './community.css'
 import { AiFillEdit } from 'react-icons/ai'
-import { RiMessage3Line } from 'react-icons/ri'
+import { RiView3Line } from 'react-icons/ri'
 import { HiOutlineUsers } from 'react-icons/hi'
 import { MdOutlineMarkEmailUnread } from 'react-icons/md'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
@@ -140,7 +140,7 @@ function Notifications() {
                             <strong>Software Engineer</strong>
                         </div>
                         <div className="community__card-button">
-                            <button>Message</button>
+                            <button>View</button>
                         </div>
                     </article>
                     <article className="community__card-list">
@@ -152,7 +152,7 @@ function Notifications() {
                             <strong>Software Engineer</strong>
                         </div>
                         <div className="community__card-button">
-                            <button>Message</button>
+                            <button>View</button>
                         </div>
                     </article>
                     <article className="community__card-list">
