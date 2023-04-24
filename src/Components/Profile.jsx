@@ -68,7 +68,6 @@ function Profile() {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam quidem porro reprehenderit iure, corporis qui.
               </span>
             </div>
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
           </article>
           <article className="edit__work">
             <div className="edit__header">
@@ -80,7 +79,6 @@ function Profile() {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam quidem porro reprehenderit iure, corporis qui.
               </span>
             </div>
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
           </article>
           <article className="edit__work">
             <div className="edit__header">
@@ -92,7 +90,6 @@ function Profile() {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam quidem porro reprehenderit iure, corporis qui.
               </span>
             </div>
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
           </article>
         </div>
         <div className="profile__page-activity">
