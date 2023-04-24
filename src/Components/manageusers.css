@@ -30,3 +30,8 @@
         padding-left:2rem;
     }
 }
+@media screen and (max-width: 1500px) {
+    .table__body table th, td {
+        padding-left:2rem;
+    }
+}
