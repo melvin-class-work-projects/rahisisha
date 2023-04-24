@@ -153,6 +153,12 @@
     color: var(--color-black);
 }
 
+@media screen and (max-width: 1500px){
+    .profle__page-edit {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
 @media screen and (max-width: 1024px) {
     .profile__page-avatar {
         width: 15rem;
