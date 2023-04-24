@@ -37,6 +37,12 @@ function Notifications() {
       setIsOpen(false);
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+  localStorage.removeItem('userRole');
+  window.location.href= '/login'
+  }
+
   return (
     <>
     <Navigation/>
@@ -126,7 +132,7 @@ function Notifications() {
                         </div>
                     </div>
                     <div className="profile__log-out">
-                        <button className="button-lg">Log Out</button>
+                        <button onClick={handleLogout} className="button-lg">Log Out</button>
                     </div>
                     </article>
                 </aside>
