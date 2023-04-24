@@ -6,7 +6,7 @@ class Seekers extends React.Component {
   }
 
   componentDidMount() {
-    fetch('http://127.0.0.1:3000/', {
+    fetch('http://127.0.0.1:3000/seekers', {
       headers: {
         'Content-Type': 'application/json',
         'Authorization': 'Bearer <your_access_token>'
