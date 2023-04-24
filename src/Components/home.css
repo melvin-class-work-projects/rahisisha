@@ -278,7 +278,7 @@
    margin-top: 1rem;
  }
  
- @media screen and (max-width: 1500px) {
+ @media screen and (max-width: 675px) {
    .home__profile-image {
       margin-left: 4rem;
    }
