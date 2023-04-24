@@ -110,7 +110,7 @@ function Signup() {
               <option style={{display:"none"}} value="seeker">Select</option>
               <option value="seeker">Seeker</option>
               <option value="employer">Employer</option>
-              <option value="admin">Admin</option>
+              <option value="ADMIN">Admin</option>
             </select>
           </div>
 
