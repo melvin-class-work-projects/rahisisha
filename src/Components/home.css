@@ -284,20 +284,33 @@
    }
  }
  
- @media screen and (max-width: 1024px) {
-   .home__page-container {
-      display: grid;
-      place-items: center;
-      gap: 0;
-      width: var(--container-width-md);
-      padding: 0;
-      margin: 0;
-      left: 0;
-      right: 0;
-   }
-   .home__page-profile {
-      display: none;
-   }
+ @media screen and (max-width: 675px) {
+  .home__profile-image {
+    margin-left: 2rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .home__page-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    left: 0;
+    right: 0;
+  }
+  .home__page-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2rem;
+  }
+}
+
    .homepage__posts {
       width: var(--container-width-df);
    }
@@ -311,7 +324,6 @@
    .posts__lists-card {
       width: 42rem;
    }
- }
  
  
  @media screen and (max-width: 600px) {
