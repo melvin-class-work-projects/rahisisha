@@ -41,6 +41,11 @@
     height: fit-content;
 }
 
+@media screen and (max-width: 1500px) {
+    .dashboard__container {
+        grid-template-columns: 15% 70%;
+    }
+}
 @media screen and (max-width: 1024px)  {
     .home__page-profile {
         display: none;
