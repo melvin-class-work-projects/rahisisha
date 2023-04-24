@@ -2,8 +2,11 @@ import React from "react";
 import { useState, useEffect } from "react";
 import "./home.css";
 import { AiFillEdit } from "react-icons/ai";
-import { RiMessage3Line } from "react-icons/ri";
+import { BiUserCircle } from "react-icons/bi";
 import { HiOutlineUsers } from "react-icons/hi";
+import { GrUserWorker } from "react-icons/gr";
+import { AiOutlineFieldTime } from "react-icons/ai";
+import { BsCashStack } from "react-icons/bs";
 import { BsPlayCircle, BsWindowSidebar } from "react-icons/bs";
 import { TbPhotoCheck } from "react-icons/tb";
 import { BiCalendar } from "react-icons/bi";
@@ -161,7 +164,8 @@ function HomePage() {
                               <div className="form__group-input">
                                 <input
                                   type="text"
-                                  placeholder="Enter your current email"
+                                  placeholder="Enter your full name"
+                                  name="full-name"
                                 />
                               </div>
                             </div>
@@ -174,6 +178,19 @@ function HomePage() {
                                 <input
                                   type="text"
                                   placeholder="Enter your current email"
+                                  name="email"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <BiUserCircle />
+                                <label htmlFor="">Avatar</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="file"
+                                  name="avatar"
                                 />
                               </div>
                             </div>
@@ -185,7 +202,47 @@ function HomePage() {
                               <div className="form__group-input">
                                 <input
                                   type="text"
-                                  placeholder="Enter your current email"
+                                  placeholder="Enter your current Location"
+                                  name="location"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <GrUserWorker />
+                                <label htmlFor="">Preferred Job</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="text"
+                                  placeholder="Enter your preferred job"
+                                  name="preferred-job"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <AiOutlineFieldTime />
+                                <label htmlFor="">Availability</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="text"
+                                  placeholder="How soon can you receive job opportunities"
+                                  name="available"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <BsCashStack />
+                                <label htmlFor="">Anticipated salary</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="number"
+                                  placeholder="Anticipated salary"
+                                  name="salary"
                                 />
                               </div>
                             </div>
@@ -197,12 +254,13 @@ function HomePage() {
                               <div className="form__group-input">
                                 <input
                                   type="text"
-                                  placeholder="Enter your current email"
+                                  placeholder="Enter your current phone number"
+                                  name="phone-number"
                                 />
                               </div>
                             </div>
                             <div className="form__group-button">
-                              <button className="form__group-save">Save</button>
+                              <button type="submit" className="form__group-save">Save</button>
                             </div>
                           </form>
                         </div>

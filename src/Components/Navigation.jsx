@@ -24,9 +24,6 @@ function Navigation() {
             <li className="nav-item">
               <Link className="nav-link" to="/community" style={{color: 'white', fontSize: '1.0rem'}}>Community</Link>
             </li>
-            {/* <li className="nav-item">
-              <Link className="nav-link" to="/logout" style={{color: 'white', fontSize: '1.2rem'}}>Logout</Link>
-            </li> */}
           </ul>
         </div>
       </div>
