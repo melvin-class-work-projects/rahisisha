@@ -42,7 +42,10 @@ function HomePage() {
   const [authenticated, setAuthenticated] = useState(false);
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
-  const [user, setUser] = useState()
+
+ 
+
+  const [user, setUser] = useState([]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
@@ -93,7 +96,6 @@ function HomePage() {
   }, []);
   
 
-  
   const openModal = () => {
     setIsOpen(true);
   };
@@ -124,7 +126,7 @@ function HomePage() {
       formData.append("file", file);
 
       // Send the post request
-      const response = await fetch("http://127.0.0.1:3000/posts", {
+      const response = await fetch("http://127.0.0.1:3000/seekers", {
         method: "POST",
         body: formData,
       });
@@ -132,6 +134,7 @@ function HomePage() {
       // Check for success status
       if (response.ok) {
         // Handle success
+        setUser(response.data);
         console.log("Post request success!");
       } else {
         // Handle error
@@ -140,7 +143,54 @@ function HomePage() {
     } catch (error) {
       console.error("Post request failed:", error);
     }
+    console.log(user);
   };
+
+  useEffect(() => {
+    // Get the access token from localStorage
+    const accessToken = localStorage.getItem("accessToken");
+
+    if (accessToken) {
+      try {
+        // Decode the access token
+        const decodedToken = JSON.parse(atob(accessToken.split(".")[1]));
+
+        // Fetch user details using the decoded token
+        fetch("http://127.0.0.1:3000/seekers", {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Failed to fetch user details");
+            }
+            return response.json();
+          })
+          .then((data) => {
+            // Handle the fetched user details
+            // console.log("User details:", data);
+            // Set the user data in state
+            setUser(data);
+          })
+          .catch((error) => {
+            console.error(error);
+            // ... Handle error fetching user details
+          });
+      } catch (error) {
+        console.error("Failed to decode access token", error);
+        // ... Handle error decoding access token
+      }
+    } else {
+      console.error("Access token not found in localStorage");
+      // ... Handle access token not found
+    }
+  }, []); // Empty dependency array to ensure useEffect runs only once
+
+
+
+  console.log(user)
   return (
     <>
       <Navigation />
@@ -160,10 +210,20 @@ function HomePage() {
                 </div>
               </div>
               <div className="home__profile-content">
-                <div className="home__profile-title">
-                  <h4>{user}</h4>
-                  <span>Software Engineer</span>
-                </div>
+
+              <div className="home__profile-title">
+                {user && user[0] ? (
+                  <>
+                    <h4>{user[0].full_name} </h4>
+                    <span>{user[0].email} </span>
+                  </>
+                ) : (
+                  <>
+                    <h4>Loading...</h4>
+                  </>
+                )}
+              </div>
+
                 <div className="home__profile-body">
                   <div className="profile__body-icon">
                     <div className="icon__profile">
@@ -181,7 +241,10 @@ function HomePage() {
                             Edit Your Profile
                           </strong>
                         </div>
-                        <div className="modal__body"  style={{  overflowY: 'auto', textAlign:"center" }}>
+                        <div
+                          className="modal__body"
+                          style={{ overflowY: "auto", textAlign: "center" }}
+                        >
                           <form action="" className="form__modal">
                             <div className="form__group">
                               <div className="form__group-header">
@@ -215,10 +278,7 @@ function HomePage() {
                                 <label htmlFor="">Avatar</label>
                               </div>
                               <div className="form__group-input">
-                                <input
-                                  type="file"
-                                  name="avatar"
-                                />
+                                <input type="file" name="avatar" />
                               </div>
                             </div>
                             <div className="form__group">
@@ -287,7 +347,12 @@ function HomePage() {
                               </div>
                             </div>
                             <div className="form__group-button">
-                              <button type="submit" className="form__group-save">Save</button>
+                              <button
+                                type="submit"
+                                className="form__group-save"
+                              >
+                                Save
+                              </button>
                             </div>
                           </form>
                         </div>
@@ -316,6 +381,8 @@ function HomePage() {
                 <button className="button-lg" onClick={handleLogout}>
                   Log Out
                 </button>
+
+               
               </div>
             </article>
           </aside>
@@ -387,7 +454,7 @@ function HomePage() {
                           src="https://images.pexels.com/photos/14041401/pexels-photo-14041401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
                           alt=""
                         />
-                         <Post/>
+                        <Post />
                       </div>
                       <div className="card__profile-about">
                         <h5>Mid-Senior Software Engineer</h5>
@@ -414,7 +481,6 @@ function HomePage() {
                           </button>
                           <h5>Comment</h5>
                         </div>
-                       
                       </div>
                     </div>
                   </article>
@@ -422,7 +488,6 @@ function HomePage() {
             </div>
           </div>
         </div>
-
       </section>
     </>
   );

@@ -13,14 +13,18 @@ import { BsTelephone } from "react-icons/bs";
 
 const SeekersList = () => {
   const [formValues, setFormValues] = useState({
-    fullName: "",
+    full_name: "",
     email: "",
     avatar: null,
     location: "",
-    preferredJob: "",
-    available: "",
-    anticipatedSalary: "",
+    date_of_birth:"",
+    preferred_job: "",
+    availability: "",
+    minimum_salary: "",
     phoneNumber: "",
+    gender: "",
+    verified: "false",
+    user_code: "",
   });
 
   const handleChange = (e) => {
@@ -55,8 +59,7 @@ const SeekersList = () => {
       });
   };
 
-
-  console.log(formValues)
+  console.log(formValues);
 
   const handleUpdate = (e) => {
     e.preventDefault();
@@ -74,7 +77,11 @@ const SeekersList = () => {
 
     // Decode the accessToken to obtain user_code
     const decodedToken = JSON.parse(atob(accessToken.split(".")[1]));
-    const userCode = decodedToken.user_code;
+    const userCode = decodedToken.user_ref;
+
+    // Include user_code in the formValues
+    const updatedFormValues = { ...formValues, user_code: userCode };
+    console.log(userCode);
 
     // Fetch API to send form data with user_code
     fetch("http://127.0.0.1:3000/seekers", {
@@ -83,7 +90,7 @@ const SeekersList = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`, // Include user_code in Authorization header
       },
-      body: JSON.stringify(formValues), // Convert formValues to JSON string
+      body: JSON.stringify(updatedFormValues), // Convert updatedFormValues to JSON string
     })
       .then((response) => {
         // Handle response
@@ -99,6 +106,8 @@ const SeekersList = () => {
         // Handle error
         console.error("Failed to update form data.", error);
       });
+
+    console.log(updatedFormValues);
   };
 
   return (
@@ -121,8 +130,40 @@ const SeekersList = () => {
           <input
             type="text"
             placeholder="Enter your full name"
-            name="fullName"
-            value={formValues.fullName}
+            name="full_name"
+            value={formValues.full_name}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+
+      <div className="form__group">
+        <div className="form__group-header">
+          <BiUser />
+          <label htmlFor="">Gender</label>
+        </div>
+        <div className="form__group-input">
+          <input
+            type="text"
+            placeholder="Enter your full name"
+            name="gender"
+            value={formValues.gender}
+            onChange={handleChange}
+          />
+        </div>
+      </div>
+
+      <div className="form__group">
+        <div className="form__group-header">
+          <MdOutlineMarkEmailUnread />
+          <label htmlFor="">D.O.B</label>
+        </div>
+        <div className="form__group-input">
+          <input
+            type="date"
+            placeholder="Enter your current email"
+            name="date_of_birth"
+            value={formValues.date_of_birth}
             onChange={handleChange}
           />
         </div>
@@ -182,8 +223,8 @@ const SeekersList = () => {
           <input
             type="text"
             placeholder="Enter your preferred job"
-            name="preferred-job"
-            value={formValues.preferredJob}
+            name="preferred_job"
+            value={formValues.preferred_job}
             onChange={handleChange}
           />
         </div>
@@ -197,8 +238,8 @@ const SeekersList = () => {
           <input
             type="text"
             placeholder="How soon can you receive job opportunities"
-            name="available"
-            value={formValues.available}
+            name="availability"
+            value={formValues.availabilty}
             onChange={handleChange}
           />
         </div>
@@ -212,8 +253,8 @@ const SeekersList = () => {
           <input
             type="text"
             placeholder="Enter your anticipated salary"
-            name="anticipatedSalary"
-            value={formValues.anticipatedSalary}
+            name="minimum_salary"
+            value={formValues.minimum_salary}
             onChange={handleChange}
           />
         </div>
@@ -222,14 +263,13 @@ const SeekersList = () => {
       <div className="form__group">
         <div className="form__group-header">
           <BsTelephone />
-          <label htmlFor="phone-number">Phone number</label>
+          <label htmlFor="">Phone Number</label>
         </div>
         <div className="form__group-input">
           <input
             type="text"
-            placeholder="Enter your current phone number"
-            name="phone-number"
-            id="phone-number" // Update with an appropriate ID
+            placeholder="Enter your phone number"
+            name="phoneNumber"
             value={formValues.phoneNumber}
             onChange={handleChange}
           />
