@@ -42,10 +42,14 @@ function HomePage() {
   const [authenticated, setAuthenticated] = useState(false);
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
+
+ 
+
   const [user, setUser] = useState([]);
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken);
     if (accessToken) {
       setAuthenticated(true);
       fetch("http://127.0.0.1:3000/posts", {
@@ -65,7 +69,32 @@ function HomePage() {
     } else {
       setAuthenticated(false);
     }
+
+    if (accessToken) {
+      setAuthenticated(true);
+      const [, payloadBase64] = accessToken.split(".");
+      const payload = JSON.parse(atob(payloadBase64));
+      const userId = payload.user_ref; // extracting the user ID from the access token payload
+
+      fetch(`http://127.0.0.1:3000/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            throw new Error("Network response was not ok");
+          }
+        })
+        .then((data) => setUser(data.username))
+        .catch((error) => console.log(error));
+    } else {
+      setAuthenticated(false);
+    }
   }, []);
+  
 
   const openModal = () => {
     setIsOpen(true);
@@ -181,6 +210,7 @@ function HomePage() {
                 </div>
               </div>
               <div className="home__profile-content">
+
               <div className="home__profile-title">
                 {user && user[0] ? (
                   <>
@@ -193,6 +223,7 @@ function HomePage() {
                   </>
                 )}
               </div>
+
                 <div className="home__profile-body">
                   <div className="profile__body-icon">
                     <div className="icon__profile">
@@ -387,11 +418,12 @@ function HomePage() {
                         <div className="popup_form">
                           <form action="" className="popup_form">
                             <div className="popup_form-input">
+                              <input type="text" placeholder="Title" />
                               <input
                                 type="text"
                                 placeholder="Write a description"
                               />
-                              <input type="file" name="" id="" required />
+                              <input type="file" name="" id="" />
                             </div>
                             <div className="form__group-button">
                               <button className="form__group-save">Save</button>
@@ -403,75 +435,11 @@ function HomePage() {
                   </div>
                   <div className="posts__icon-photo">
                     <TbPhotoCheck />
-                    <Popup
-                      trigger={<small>Photos</small>}
-                      position="center"
-                      className="my-popup"
-                    >
-                      <div className="popup_body">
-                        <div className="popup_body-header">
-                          <h5>Photo Posts</h5>
-                        </div>
-                        <div className="popup_form">
-                          <form action="" className="popup_form">
-                            <div className="popup_form-input">
-                              <input
-                                type="text"
-                                placeholder="Write a description"
-                              />
-                              <input type="file" name="" id="" required />
-                            </div>
-                            <div className="form__group-button">
-                              <button
-                                onClick={{ handlePost }}
-                                className="form__group-save"
-                              >
-                                Save
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </Popup>
+                    <small>Photos</small>
                   </div>
                   <div className="posts__icon-date">
                     <BiCalendar />
-                    <Popup
-                      trigger={<small>Events</small>}
-                      position="center"
-                      className="my-popup"
-                    >
-                      <div className="popup_body">
-                        <div className="popup_body-header">
-                          <h5>Date Posts</h5>
-                        </div>
-                        <div className="popup_form">
-                          <form className="popup_form">
-                            <div className="popup_form-input">
-                              <input
-                                type="text"
-                                placeholder="Write a description"
-                                onChange={handleDescriptionChange}
-                                value={description}
-                              />
-                              <input
-                                type="file"
-                                required
-                                onChange={handleFileChange}
-                              />
-                            </div>
-                            <div className="form__group-button">
-                              <button
-                                onClick={handlePost}
-                                className="form__group-save"
-                              >
-                                Save
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </Popup>
+                   <small>Events</small>
                   </div>
                 </div>
               </div>
