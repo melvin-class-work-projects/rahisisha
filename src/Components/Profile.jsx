@@ -51,8 +51,60 @@ function Profile() {
               <span>Software Engineer</span>
               <div className="profile__about">
                 <span>Nairobi, Kenya</span>
-                <h5 onClick={openModal}>Contact info</h5>
-                <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
+                <h5 onClick={openModal}>Create a post</h5>
+                <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeModal}
+                        style={customStyles}
+                      >
+                        <div className="modal__header">
+                          <strong ref={(_subtitle) => (subtitle = _subtitle)}>
+                          Create a post
+                          </strong>
+                        </div>
+                        <div className="modal__body"  style={{  overflowY: 'auto', textAlign:"center" }}>
+                          <form action="" className="form__modal">
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <label htmlFor="">Enter Title</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="text"
+                                  placeholder="Enter your Title"
+                                  name="full-name"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <label htmlFor="">Description</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="text"
+                                  placeholder="Enter a description"
+                                  name="email"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <label htmlFor="">Media</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="file"
+                                  name="avatar"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group-button">
+                              <button type="submit" className="form__group-save">Save</button>
+                            </div>
+                          </form>
+                        </div>
+                      </Modal>
               </div>
             </div>
           </div>
@@ -68,7 +120,6 @@ function Profile() {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam quidem porro reprehenderit iure, corporis qui.
               </span>
             </div>
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
           </article>
           <article className="edit__work">
             <div className="edit__header">
@@ -80,7 +131,6 @@ function Profile() {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam quidem porro reprehenderit iure, corporis qui.
               </span>
             </div>
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
           </article>
           <article className="edit__work">
             <div className="edit__header">
@@ -92,7 +142,6 @@ function Profile() {
                 Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ullam quidem porro reprehenderit iure, corporis qui.
               </span>
             </div>
-            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}></Modal>
           </article>
         </div>
         <div className="profile__page-activity">

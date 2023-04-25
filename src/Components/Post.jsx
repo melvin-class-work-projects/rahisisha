@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 
 function Post() {
@@ -103,9 +104,10 @@ function Post() {
           </li>
         ))}
       </ul>
+
     </div>
   );
 }
 
-export default  Post;
 
+export default  Post;
