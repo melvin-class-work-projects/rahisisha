@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import { FaRegCommentAlt } from "react-icons/fa";
 
 function Comments({ postCode }) {
@@ -11,8 +10,9 @@ function Comments({ postCode }) {
   }, []);
 
   const fetchComments = async () => {
-    const response = await axios.get(`http://localhost:3000/post_comments?post_code=${postCode}`);
-    setComments(response.data);
+    const response = await fetch(`http://localhost:3000/post_comments?post_code=${postCode}`);
+    const data = await response.json();
+    setComments(data);
   };
 
   const handleCreateComment = async (e) => {
@@ -21,16 +21,30 @@ function Comments({ postCode }) {
       content: content,
       post_code: postCode,
     };
-    const response = await axios.post("http://localhost:3000/comments", comment);
-    setComments([...comments, response.data]);
+    const response = await fetch("http://localhost:3000/comments", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(comment),
+    });
+    const data = await response.json();
+    setComments([...comments, data]);
     setContent("");
   };
 
   const handleUpdateComment = async (id, updatedComment) => {
-    const response = await axios.patch(`http://localhost:3000/comments/${id}`, updatedComment);
+    const response = await fetch(`http://localhost:3000/comments/${id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(updatedComment),
+    });
+    const data = await response.json();
     const updatedComments = comments.map((comment) => {
-      if (comment.id === response.data.id) {
-        return response.data;
+      if (comment.id === data.id) {
+        return data;
       }
       return comment;
     });
@@ -38,7 +52,9 @@ function Comments({ postCode }) {
   };
 
   const handleDeleteComment = async (id) => {
-    await axios.delete(`http://localhost:3000/comments/${id}`);
+    await fetch(`http://localhost:3000/comments/${id}`, {
+      method: "DELETE",
+    });
     const updatedComments = comments.filter((comment) => comment.id !== id);
     setComments(updatedComments);
   };
@@ -74,3 +90,4 @@ function Comments({ postCode }) {
 }
 
 export default Comments;
+
