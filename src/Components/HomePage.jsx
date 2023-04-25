@@ -42,9 +42,11 @@ function HomePage() {
   const [authenticated, setAuthenticated] = useState(false);
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
+  const [user, setUser] = useState()
 
   useEffect(() => {
     const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken);
     if (accessToken) {
       setAuthenticated(true);
       fetch("http://127.0.0.1:3000/posts", {
@@ -64,7 +66,32 @@ function HomePage() {
     } else {
       setAuthenticated(false);
     }
+
+    if (accessToken) {
+      setAuthenticated(true);
+      const [, payloadBase64] = accessToken.split(".");
+      const payload = JSON.parse(atob(payloadBase64));
+      const userId = payload.user_ref; // extracting the user ID from the access token payload
+
+      fetch(`http://127.0.0.1:3000/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            throw new Error("Network response was not ok");
+          }
+        })
+        .then((data) => setUser(data.username))
+        .catch((error) => console.log(error));
+    } else {
+      setAuthenticated(false);
+    }
   }, []);
+  
 
   
   const openModal = () => {
@@ -134,7 +161,7 @@ function HomePage() {
               </div>
               <div className="home__profile-content">
                 <div className="home__profile-title">
-                  <h4>Jane Doe</h4>
+                  <h4>{user}</h4>
                   <span>Software Engineer</span>
                 </div>
                 <div className="home__profile-body">
