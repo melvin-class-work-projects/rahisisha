@@ -36,7 +36,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("https://rahisisha-backend-4dlx.onrender.com/generate-token/", {
+      const response = await fetch("http://127.0.0.1:3000/generate-token/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
