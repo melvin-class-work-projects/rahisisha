@@ -22,7 +22,7 @@ function Post() {
   const handleNewPostSubmit = (event) => {
     event.preventDefault();
 
-    fetch('Backend-ag31.onrender.com/signup/posts', {
+    fetch('http://localhost:3001/posts', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

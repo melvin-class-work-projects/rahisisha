@@ -17,7 +17,9 @@ import Modal from "react-modal";
 import Popup from "reactjs-popup";
 import { Link } from "react-router-dom";
 import Navigation from "./Navigation";
+import Comments from "./Comments";
 
+const postCode = "12345";
 
 const customStyles = {
  content: {
@@ -298,11 +300,12 @@ function HomePage() {
                          <h5>{post.likes}</h5>
                        </div>
                        <div className="buttons__comment-card">
-                         <button className="comment">
+                           <button className="comment">
                            <FaRegCommentAlt />
-                         </button>
-                         <h5>Comment</h5>
-                       </div>
+                            </button>
+                           <h5>Comment</h5>
+                             <Comments postCode={postCode} />
+                     </div>
                      </div>
                    </div>
                  </article>

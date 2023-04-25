@@ -23,9 +23,12 @@ function Signup() {
     try {
       const response = await fetch("http://127.0.0.1:3000/users", {
         method: "POST",
+        //mode: 'cors',
+        //credentials: 'include',
         headers: {
           "Content-Type": "application/json",
           Accept: "application/json",
+          //'Access-Control-Origin': '*',
         },
         body: JSON.stringify({
           username: formData.username,
@@ -33,6 +36,7 @@ function Signup() {
           password_confirmation: formData.passwordConfirm,
           role: formData.category.toLowerCase(),
         }),
+        withCredentials: true
       });
 
       const data = await response.json();
