@@ -351,11 +351,12 @@ function HomePage() {
                         <div className="popup_form">
                           <form action="" className="popup_form">
                             <div className="popup_form-input">
+                              <input type="text" placeholder="Title" />
                               <input
                                 type="text"
                                 placeholder="Write a description"
                               />
-                              <input type="file" name="" id="" required />
+                              <input type="file" name="" id="" />
                             </div>
                             <div className="form__group-button">
                               <button className="form__group-save">Save</button>
@@ -367,75 +368,11 @@ function HomePage() {
                   </div>
                   <div className="posts__icon-photo">
                     <TbPhotoCheck />
-                    <Popup
-                      trigger={<small>Photos</small>}
-                      position="center"
-                      className="my-popup"
-                    >
-                      <div className="popup_body">
-                        <div className="popup_body-header">
-                          <h5>Photo Posts</h5>
-                        </div>
-                        <div className="popup_form">
-                          <form action="" className="popup_form">
-                            <div className="popup_form-input">
-                              <input
-                                type="text"
-                                placeholder="Write a description"
-                              />
-                              <input type="file" name="" id="" required />
-                            </div>
-                            <div className="form__group-button">
-                              <button
-                                onClick={{ handlePost }}
-                                className="form__group-save"
-                              >
-                                Save
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </Popup>
+                    <small>Photos</small>
                   </div>
                   <div className="posts__icon-date">
                     <BiCalendar />
-                    <Popup
-                      trigger={<small>Events</small>}
-                      position="center"
-                      className="my-popup"
-                    >
-                      <div className="popup_body">
-                        <div className="popup_body-header">
-                          <h5>Date Posts</h5>
-                        </div>
-                        <div className="popup_form">
-                          <form className="popup_form">
-                            <div className="popup_form-input">
-                              <input
-                                type="text"
-                                placeholder="Write a description"
-                                onChange={handleDescriptionChange}
-                                value={description}
-                              />
-                              <input
-                                type="file"
-                                required
-                                onChange={handleFileChange}
-                              />
-                            </div>
-                            <div className="form__group-button">
-                              <button
-                                onClick={handlePost}
-                                className="form__group-save"
-                              >
-                                Save
-                              </button>
-                            </div>
-                          </form>
-                        </div>
-                      </div>
-                    </Popup>
+                   <small>Events</small>
                   </div>
                 </div>
               </div>
