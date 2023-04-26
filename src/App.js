@@ -12,6 +12,7 @@ import Admin from "./Components/Admin";
 import Post from "./Components/Post";
 import Community from "./Components/Community";
 import SeekersList from "./Components/SeekersList"
+import JobForm from "./Components/JobForm";
 
 function App() {
   // Function to check if there is an accessToken and Userrole in localStorage
@@ -81,8 +82,14 @@ function App() {
             isAuthenticated() ? <Post /> : <Navigate to="/posts" />
           }
         />
+        {/* <Route
+          path="/posts"
+          element={
+            isAuthenticated() ? <JobForm /> : <Navigate to="/s" />
+          }
+        /> */}
 
-<Route
+        <Route
           path="/seekers"
           element={
             isAuthenticated() ? <SeekersList /> : <Navigate to="/seekers" />
