@@ -1,107 +1,24 @@
 .community__page {
-    display: grid;
-   place-items: center;
-   margin-top: 4rem;
+    margin-top: 6rem;
 }
-.community__page-container {
-    width: var(--container-width-lg);
-    display: grid;
-    grid-template-columns: 25% 60%;
-    gap: 15%;
-}
-.community__card-list {
-    background: var(--color-black-light);
-    padding: 2rem;
-    width: var(--container-width-lg);
-}
-.community__page-list {
-    border: 3px solid var(--color-black);
-    box-shadow: 0.5rem 0.5rem 1.5rem 1.5rem var(--color-black-light);
-    display: grid;
-    place-items: center;
-    padding: 1rem;
-}
-.community__card-list {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    padding: 1rem;
-    margin-bottom: 0.5rem;
-}
-.community__card-avatar {
-    width: 8rem;
-    aspect-ratio: 1/1;
-    border: 2px solid var(--color-white);
-    border-radius: 50%;
-    overflow: hidden;
-}
-.community__card-avatar img {
-    width: 100%;
-    height: fit-content;
-}
-.comunity__card-info {
+.landing__page-button a {
+    text-decoration: none;
     color: var(--color-white);
-    display: grid;
-    place-items: center;
-}
-.community__card-button {
-    display: grid;
-    place-items: center;
-}
-.community__card-button button {
-    width: 10rem;
-    border-radius: 1rem;
-    background: var(--color-white);
-    color: var(--color-black);
-    font-weight: bold;
-    font-size: 1.1rem;
-    transition: var(--transition);
-}
-.community__card-button button:hover {
-    margin-top: -0.2rem;
     background: var(--color-black);
-    color: var(--color-white);
-    box-shadow: 0.3rem 0.3rem 1.3rem 1.3rem var(--color-white-light);
-}
-.content__profile strong {
-    font-size: 1rem;
-}
-.content__profile a {
-    text-decoration: none;
-    color: var(--color-black);
     font-size: 1rem;
     font-weight: bold;
-}
-.content__profile a:hover {
-    text-decoration: none;
-    color: var(--color-blue-light);
-}
-.form__group-header {
-    display: flex;
-    margin-bottom: 0.5rem;
-    margin-top: 0.5rem;
-}
-.form__group-header svg{
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    font-weight: bold;
-}
-.modal__header {
-    text-align: center;
-}
-.form__group-button {
-    margin-top: 2rem;
-    display: grid;
-    place-items: center;
-}
-.form__group-button button {
-    width: 10rem;
-    background: var(--color-green);
+    width: max-content;
+    padding: 1rem;
     border-radius: 1rem;
     transition: var(--transition);
+    cursor: pointer;
 }
-.form__group-button button:hover {
-    border: 2px solid var(--color-black);
+.landing__page-button a:hover {
     background: var(--color-secondary);
-    color: var(--color-white);
-    box-shadow: 0.3rem 0.3rem 1.3rem 1.3rem var(--color-black-light);
+}
+.content__body {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    
 }
