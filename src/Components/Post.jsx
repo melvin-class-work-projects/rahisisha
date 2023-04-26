@@ -92,27 +92,21 @@ function Post() {
       </form>
       <ul>
         {posts.map(post => (
-      <li key={post.post_code}>
-      <h2>{post.title}</h2>
-      <p>{post.description}</p>
-      <img src={post.media} alt={post.title} />
-      <form onSubmit={(event) => {
-        event.preventDefault();
-        handlePostUpdate(post.post_code, { likes: post.likes + 1 });
-      }}>
-        <button type="submit">Like ({post.likes})</button>
-      </form>
-      <button onClick={() => handlePostDelete(post.post_code)}>Delete</button>
-      <Comments postCode={post.post_code} />
-    </li>
-    
+          <li key={post.post_code}>
+            <h2>{post.title}</h2>
+            <p>{post.description}</p>
+            <img src={post.media} alt={post.title} />
+            <form onSubmit={(event) => {
+              event.preventDefault();
+              handlePostUpdate(post.post_code, { likes: post.likes + 1 });
+            }}>
+              <button type="submit">Like ({post.likes})</button>
+            </form>
+            <button onClick={() => handlePostDelete(post.post_code)}>Delete</button>
+          </li>
         ))}
       </ul>
-<<<<<<< HEAD
-      <Comments postCode={post.post_code} />
-=======
 
->>>>>>> 3d1215c8ec68c4695108a623a06a8f85413e0a79
     </div>
   );
 }
