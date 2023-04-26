@@ -1,3 +1,4 @@
+
 import React, { useState, useEffect } from 'react';
 import Comments from './Comments';
 
@@ -107,10 +108,14 @@ function Post() {
     
         ))}
       </ul>
+<<<<<<< HEAD
       <Comments postCode={post.post_code} />
+=======
+
+>>>>>>> 3d1215c8ec68c4695108a623a06a8f85413e0a79
     </div>
   );
 }
 
-export default  Post;
 
+export default  Post;

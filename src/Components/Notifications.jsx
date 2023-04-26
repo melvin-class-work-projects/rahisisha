@@ -2,7 +2,10 @@ import React from 'react'
 import { useState } from 'react'
 import './community.css'
 import { AiFillEdit } from 'react-icons/ai'
-import { RiView3Line } from 'react-icons/ri'
+import { GrUserWorker } from "react-icons/gr";
+import { AiOutlineFieldTime } from "react-icons/ai";
+import { BsCashStack } from "react-icons/bs";
+import { BiUserCircle } from "react-icons/bi";
 import { HiOutlineUsers } from 'react-icons/hi'
 import { MdOutlineMarkEmailUnread } from 'react-icons/md'
 import { HiOutlineLocationMarker } from 'react-icons/hi'
@@ -20,7 +23,8 @@ const customStyles = {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      width: '50rem',
+      width: '40rem',
+      height: '40rem',
       border: '3px solid black'
     },
   };
@@ -35,6 +39,12 @@ function Notifications() {
 
   function closeModal() {
       setIsOpen(false);
+  }
+
+  const handleLogout = () => {
+    localStorage.removeItem('accessToken');
+  localStorage.removeItem('userRole');
+  window.location.href= '/login'
   }
 
   return (
@@ -64,55 +74,127 @@ function Notifications() {
                             </div>
                             <div className="content__profile">
                             <strong onClick={openModal}>Edit Profile</strong>
-                            <Modal isOpen={modalIsOpen} onRequestClose={closeModal} style={customStyles}>
-                                <div className="modal__header">
-                                    <strong ref={(_subtitle) => (subtitle = _subtitle)}>Edit Your Profile</strong>
-                                </div>
-                                <div className="modal__body">
-                                    <form action="" className="form__modal">
-                                        <div className="form__group">
-                                            <div className="form__group-header">
-                                                <BiUser/>
-                                                <label htmlFor="">Enter Full Name</label>   
-                                            </div>
-                                            <div className="form__group-input">
-                                                <input type="text" placeholder='Enter your current email'/>
-                                            </div>
-                                        </div>
-                                        <div className="form__group">
-                                            <div className="form__group-header">
-                                                <MdOutlineMarkEmailUnread/>
-                                                <label htmlFor="">Email</label>                                            
-                                            </div>
-                                            <div className="form__group-input">
-                                                <input type="text" placeholder='Enter your current email'/>
-                                            </div>
-                                        </div>
-                                        <div className="form__group">
-                                            <div className="form__group-header">
-                                                <HiOutlineLocationMarker/>
-                                                <label htmlFor="">Location</label>                                            
-                                            </div>
-                                            <div className="form__group-input">
-                                                <input type="text" placeholder='Enter your current email'/>
-                                            </div>
-                                        </div>
-                                        <div className="form__group">
-                                            <div className="form__group-header">
-                                                <BsTelephone/>
-                                                <label htmlFor="">Phone number</label>                                           
-                                            </div>
-                                            <div className="form__group-input">
-                                                <input type="text" placeholder='Enter your current email'/>
-                                            </div>
-                                        </div>
-                                        <div className="form__group-button">
-                                            <button className="form__group-save">Save</button>
-                                        </div>
-
-                                    </form>
-                                </div>
-                            </Modal>
+                            <Modal
+                        isOpen={modalIsOpen}
+                        onRequestClose={closeModal}
+                        style={customStyles}
+                      >
+                        <div className="modal__header">
+                          <strong ref={(_subtitle) => (subtitle = _subtitle)}>
+                            Edit Your Profile
+                          </strong>
+                        </div>
+                        <div className="modal__body">
+                          <form action="" className="form__modal">
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <BiUser />
+                                <label htmlFor="">Enter Full Name</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="text"
+                                  placeholder="Enter your full name"
+                                  name="full-name"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <MdOutlineMarkEmailUnread />
+                                <label htmlFor="">Email</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="text"
+                                  placeholder="Enter your current email"
+                                  name="email"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <BiUserCircle />
+                                <label htmlFor="">Avatar</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="file"
+                                  name="avatar"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <HiOutlineLocationMarker />
+                                <label htmlFor="">Location</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="text"
+                                  placeholder="Enter your current Location"
+                                  name="location"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <GrUserWorker />
+                                <label htmlFor="">Preferred Job</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="text"
+                                  placeholder="Enter your preferred job"
+                                  name="preferred-job"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <AiOutlineFieldTime />
+                                <label htmlFor="">Availability</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="text"
+                                  placeholder="How soon can you receive job opportunities"
+                                  name="available"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <BsCashStack />
+                                <label htmlFor="">Anticipated salary</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="number"
+                                  placeholder="Anticipated salary"
+                                  name="salary"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group">
+                              <div className="form__group-header">
+                                <BsTelephone />
+                                <label htmlFor="">Phone number</label>
+                              </div>
+                              <div className="form__group-input">
+                                <input
+                                  type="text"
+                                  placeholder="Enter your current phone number"
+                                  name="phone-number"
+                                />
+                              </div>
+                            </div>
+                            <div className="form__group-button">
+                              <button type="submit" className="form__group-save">Save</button>
+                            </div>
+                          </form>
+                        </div>
+                      </Modal>
                             </div>
                         </div>
                         <div className="profile__body-icon">
@@ -126,7 +208,7 @@ function Notifications() {
                         </div>
                     </div>
                     <div className="profile__log-out">
-                        <button className="button-lg">Log Out</button>
+                        <button onClick={handleLogout} className="button-lg">Log Out</button>
                     </div>
                     </article>
                 </aside>
