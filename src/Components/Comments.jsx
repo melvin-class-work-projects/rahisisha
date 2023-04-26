@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { FaRegCommentAlt } from "react-icons/fa";
+import Comment from "./Comments";
 
 function Comments({ postCode }) {
   const [comments, setComments] = useState([]);
@@ -15,10 +16,10 @@ function Comments({ postCode }) {
     setComments(data);
   };
 
-  const handleCreateComment = async (e) => {
-    e.preventDefault();
+  const handleCreateComment = async (updatedData) => {
     const comment = {
-      content: content,
+      name: updatedData.name,
+      content: updatedData.content,
       post_code: postCode,
     };
     const response = await fetch("http://localhost:3000/comments", {
@@ -30,7 +31,6 @@ function Comments({ postCode }) {
     });
     const data = await response.json();
     setComments([...comments, data]);
-    setContent("");
   };
 
   const handleUpdateComment = async (id, updatedComment) => {
@@ -62,9 +62,7 @@ function Comments({ postCode }) {
   return (
     <div>
       <div className="buttons__comment-card">
-        <button className="comment" onClick={() => handleCreateComment()}>
-          <FaRegCommentAlt />
-        </button>
+        <Comment setComment={handleCreateComment} />
         <h5>Comment</h5>
       </div>
       <ul>
@@ -78,16 +76,11 @@ function Comments({ postCode }) {
           </li>
         ))}
       </ul>
-      <form onSubmit={handleCreateComment}>
-        <label>
-          Content:
-          <input type="text" value={content} onChange={(e) => setContent(e.target.value)} />
-        </label>
-        <button type="submit">Add Comment</button>
-      </form>
     </div>
   );
 }
 
 export default Comments;
+
+
 
