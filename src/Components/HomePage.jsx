@@ -21,9 +21,10 @@ import Popup from "reactjs-popup";
 import { Link } from "react-router-dom";
 import Navigation from "./Navigation";
 
-import Comments from "./Comments";
 
-const postCode = "12345";
+
+import Post from "./Post";
+import axios from "axios";
 
 
 const customStyles = {
@@ -42,63 +43,57 @@ const customStyles = {
 function HomePage() {
   let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPost] = useState([]);
   const [authenticated, setAuthenticated] = useState(false);
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
 
- 
-
   const [user, setUser] = useState([]);
-
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    console.log(accessToken);
-    if (accessToken) {
-      setAuthenticated(true);
-      fetch("http://127.0.0.1:3000/posts", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw new Error("Network response was not ok");
-          }
-        })
-        .then((data) => setPosts(data))
-        .catch((error) => console.log(error));
-    } else {
-      setAuthenticated(false);
-    }
+    const getPosts = async () => {
+      try {
+        // Get the access token from localStorage
+        const accessToken = localStorage.getItem("accessToken");
 
-    if (accessToken) {
-      setAuthenticated(true);
-      const [, payloadBase64] = accessToken.split(".");
-      const payload = JSON.parse(atob(payloadBase64));
-      const userId = payload.user_ref; // extracting the user ID from the access token payload
+        // Make sure the access token is present
+        if (!accessToken) {
+          // Handle the case when access token is not available
+          console.error("Access token not found in localStorage");
+          return;
+        }
 
-      fetch(`http://127.0.0.1:3000/users/${userId}`, {
-        headers: {
+        // Set the authorization header with the access token
+        const headers = {
           Authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw new Error("Network response was not ok");
-          }
-        })
-        .then((data) => setUser(data.username))
-        .catch((error) => console.log(error));
-    } else {
-      setAuthenticated(false);
-    }
+        };
+
+        // Make GET request to '/posts' with authorization header
+        const response = await fetch("http://127.0.0.1:3000/posts", { headers });
+
+        // Check if the response is successful
+        if (!response.ok) {
+          // Handle the case when response is not successful
+          throw new Error(
+            `Error fetching posts: ${response.status} ${response.statusText}`
+          );
+        }
+
+        // Parse the response data as JSON
+        const data = await response.json();
+
+        // Set the response data to state
+        setPost(data);
+      } catch (error) {
+        // Handle any error that occurred during the API request
+        console.error(error);
+      }
+    };
+
+    // Call the getPosts function
+    getPosts();
   }, []);
-  
+
+  console.log(Post);
 
   const openModal = () => {
     setIsOpen(true);
@@ -192,9 +187,7 @@ function HomePage() {
     }
   }, []); // Empty dependency array to ensure useEffect runs only once
 
-
-
-  console.log(user)
+  console.log(Post);
   return (
 
    <>
@@ -471,14 +464,18 @@ function HomePage() {
               </div>
               <div className="home__profile-content">
 
-              <div className="home__profile-title">
-                {user && user[0] ? (
-                  <>
-                    <h4>{user[0].full_name} </h4>
-                    <span>{user[0].email} </span>
-                  </>
-                ) : (
-  
+                <div className="home__profile-title">
+                  {user && user[0] ? (
+                    <>
+                      <h4>{user[0].full_name} </h4>
+                      <span>{user[0].email} </span>
+                    </>
+                  ) : (
+                    <>
+                      <h4>Loading...</h4>
+                    </>
+                  )}
+                </div>
 
                 <div className="home__profile-body">
                   <div className="profile__body-icon">
@@ -637,8 +634,6 @@ function HomePage() {
                 <button className="button-lg" onClick={handleLogout}>
                   Log Out
                 </button>
-
-               
               </div>
             </article>
           </aside>
@@ -695,7 +690,7 @@ function HomePage() {
                   </div>
                   <div className="posts__icon-date">
                     <BiCalendar />
-                   <small>Events</small>
+                    <small>Events</small>
                   </div>
                 </div>
               </div>
@@ -722,7 +717,7 @@ function HomePage() {
                         <small>{post.description}</small>
                       </div>
                       <div className="posts__card-image">
-                        <img src={post.image} alt="" />
+                        <img className="img-fluid" src={post.media} alt="" style={{display:"block", height:'250px', width:"250px"}} />
                       </div>
                       <div className="posts__card-buttons">
                         <div className="buttons__like-card">
