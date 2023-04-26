@@ -1,85 +1,105 @@
-import React, { useState } from "react";
-import jwt_decode from "jsonwebtoken";
+import React, { useState, useEffect } from "react";
 
 function JobForm() {
+  // set up state variables using useState hook
   const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [email, setEmail] = useState("");
   const [avatar, setAvatar] = useState("");
   const [location, setLocation] = useState("");
-  const [companyDescription, setCompanyDescription] = useState("");
+  const [description, setDescription] = useState("");
   const [authenticated, setAuthenticated] = useState(false);
+  const [userId, setUserId] = useState("");
+  const [posts, setPosts] = useState([]);
+  const [user, setUser] = useState("");
 
-  const accessToken = localStorage.getItem("accessToken");
-
-  if (accessToken) {
-    const decodedToken = jwt_decode(accessToken);
-    const currentTime = Date.now() / 1000;
-
-    if (decodedToken.exp < currentTime) {
-      alert("Your access token has expired. Please log in again.");
-      localStorage.removeItem("accessToken");
-      setAuthenticated(Afalse);
-    } else {
+  // use useEffect hook to fetch user and post data on component mount
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    console.log(accessToken);
+    if (accessToken) {
       setAuthenticated(true);
-    }
-  }
+      fetch("http://127.0.0.1:3000/posts", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            throw new Error("Network response was not ok");
+          }
+        })
+        .then((data) => setPosts(data))
+        .catch((error) => console.log(error));
+      
+      const [, payloadBase64] = accessToken.split(".");
+      const payload = JSON.parse(atob(payloadBase64));
+      const userId = payload.user_ref; // extracting the user ID from the access token payload
 
+      fetch(`http://127.0.0.1:3000/users/${userId}`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          } else {
+            throw new Error("Network response was not ok");
+          }
+        })
+        .then((data) => setUser(data.username))
+        .catch((error) => console.log(error));
+    } else {
+      setAuthenticated(false);
+    }
+  }, []);
+
+  // handle form submission
   const handleSubmit = (event) => {
     event.preventDefault();
+    const accessToken = localStorage.getItem("accessToken");
 
-    if (!authenticated) {
-      alert("You need to log in to post a job");
-      return;
-    }
-
-    // send job data to backend API
-    fetch("https://rahisisha-backend-3t0w.onrender.com/api/jobs", {
+    // make POST request to API with form data
+    fetch("http://127.0.0.1:3000/jobs", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        "Authorization": `Bearer ${accessToken}`,
+        Authorization: `Bearer ${accessToken}`,
       },
       body: JSON.stringify({
         title,
-        description,
         companyName,
         email,
         avatar,
         location,
-        companyDescription,
+        description,
       }),
     })
-      .then((response) => {
-        if (response.ok) {
-          alert("Job posted successfully!");
-          setTitle("");
-          setDescription("");
-          setCompanyName("");
-          setEmail("");
-          setAvatar("");
-          setLocation("");
-          setCompanyDescription("");
-        } else {
-          alert("Failed to post job");
-        }
-      })
-      .catch((error) => {
-        alert("Error posting job: " + error);
-      });
+    .then((response) => {
+      if (response.ok) {
+        alert("Job posted successfully!");
+        setTitle("");
+        setCompanyName("");
+        setEmail("");
+        setAvatar("");
+        setLocation("");
+        setDescription("");
+      } else {
+        alert("Failed to post job");
+      }
+    })
+    .catch((error) => {
+      alert("Error posting job: " + error);
+    });
   };
-
   return (
     <form onSubmit={handleSubmit}>
       <label>
-        Job Title:
+        Title:
         <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-      </label>
-      <br />
-      <label>
-        Job Description:
-        <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
       </label>
       <br />
       <label>
@@ -104,12 +124,12 @@ function JobForm() {
       <br />
       <label>
         Description:
-        <textarea value={companyDescription} onChange={(e) => setCompanyDescription(e.target.value)} />
+        <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
       </label>
       <br />
-      <button type="submit">Post Job</button>
+      <button type="submit">Submit</button>
     </form>
   );
 }
 
-export default JobForm;
+export default JobForm
