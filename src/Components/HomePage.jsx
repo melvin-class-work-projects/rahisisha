@@ -22,11 +22,13 @@ import { Link } from "react-router-dom";
 import Navigation from "./Navigation";
 import Post from "./Post";
 import axios from "axios";
+import SeekersList from "./SeekersList";
+import Comments from "./Comments"
 
 const customStyles = {
   content: {
     top: "50%",
-    left: "50%",
+    left: "55%",
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
@@ -39,48 +41,45 @@ const customStyles = {
 function HomePage() {
   let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen2, setIsOpen2] = useState(false);
   const [posts, setPost] = useState([]);
   const [authenticated, setAuthenticated] = useState(false);
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
 
   const [user, setUser] = useState([]);
+
+  // fetching posts
   useEffect(() => {
     const getPosts = async () => {
       try {
-        // Get the access token from localStorage
-        const accessToken = localStorage.getItem("eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2Vla2VyIiwidXNlcl9yZWYiOiJmYjd2LWoybXQtdm54eSIsImV4cCI6MTY4MjQyNjExOX0.djHIpRUNvqGBQ9FTSKrl99Gt39QP0GaEsrkbpeLTh5");
+        const accessToken = localStorage.getItem("eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2Vla2VyIiwidXNlcl9yZWYiOiJmYjd2LWoybXQtdm54eSIsImV4cCI6MTY4MjQyNjExOX0.djHIpRUNvqGBQ9FTSKrl99Gt39QP0GaEsrkbpeLTh5E");
 
-        // Make sure the access token is present
         if (!accessToken) {
-          // Handle the case when access token is not available
           console.error("Access token not found in localStorage");
           return;
         }
 
-        // Set the authorization header with the access token
         const headers = {
           Authorization: `Bearer ${accessToken}`,
         };
 
-        // Make GET request to '/posts' with authorization header
-        const response = await fetch("http://127.0.0.1:3000/posts", { headers });
+        const response = await fetch("http://127.0.0.1:3000/posts", {
+          headers,
+        });
 
-        // Check if the response is successful
         if (!response.ok) {
-          // Handle the case when response is not successful
           throw new Error(
             `Error fetching posts: ${response.status} ${response.statusText}`
           );
         }
 
-        // Parse the response data as JSON
         const data = await response.json();
 
-        // Set the response data to state
+        JSON.stringify(data);
+
         setPost(data);
       } catch (error) {
-        // Handle any error that occurred during the API request
         console.error(error);
       }
     };
@@ -88,8 +87,6 @@ function HomePage() {
     // Call the getPosts function
     getPosts();
   }, []);
-
-  console.log(Post);
 
   const openModal = () => {
     setIsOpen(true);
@@ -99,11 +96,50 @@ function HomePage() {
     setIsOpen(false);
   };
 
+  const openModal2 = () => {
+    setIsOpen2(true);
+  };
+
+  const closeModal2 = () => {
+    setIsOpen2(false);
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userRole");
     window.location.href = "/login";
+    setUser(null);
   };
+
+  // Like function
+
+  // const handleLike = (posts, incrementLikesBy = 1) => {
+  //   const accessToken = localStorage.getItem("accessToken");
+  
+  //   const postCode = posts.post_code;
+  //   console.log(postCode);
+  //   axios
+  //     .patch(
+  //       `http://127.0.0.1:3000/posts/${postCode}`,
+  //       {
+  //         likes: posts.likes + incrementLikesBy,
+  //       },
+  //       {
+  //         headers: {
+  //           Authorization: `Bearer ${accessToken}`,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       console.log("Post liked successfully:", response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error("Failed to like post:", error);
+  //     });
+  // };       
+  
+
+  
 
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
@@ -113,26 +149,25 @@ function HomePage() {
     setFile(e.target.files[0]);
   };
 
+  // posting a post
   const handlePost = async () => {
     try {
-      // Create a FormData object to send the form data
       const formData = new FormData();
       formData.append("description", description);
       formData.append("file", file);
 
-      // Send the post request
-      const response = await fetch("http://127.0.0.1:3000/seekers", {
-        method: "POST",
-        body: formData,
-      });
+      const response = await fetch(
+        "https://rahisisha-backend-3t0w.onrender.com/posts",
+        {
+          method: "POST",
+          body: formData,
+        }
+      );
 
-      // Check for success status
       if (response.ok) {
-        // Handle success
         setUser(response.data);
         console.log("Post request success!");
       } else {
-        // Handle error
         console.log("Post request failed:", response.statusText);
       }
     } catch (error) {
@@ -141,20 +176,21 @@ function HomePage() {
     console.log(user);
   };
 
+  //fetching user details
   useEffect(() => {
-    // Get the access token from localStorage
     const accessToken = localStorage.getItem("accessToken");
 
     if (accessToken) {
       try {
-        // Decode the access token
-        const decodedToken = JSON.parse(atob(accessToken.split(".")[1]));
+        const decodedToken = JSON.parse(atob(accessToken.split(".")[1])); //use jwt
+        const user_code = decodedToken.user_ref;
 
-        // Fetch user details using the decoded token
-        fetch("http://127.0.0.1:3000/seekers", {
+        console.log(user_code);
+
+        fetch(`http://127.0.0.1:3000/users/${user_code}`, {
           method: "GET",
           headers: {
-            Authorization: `Bearer ${accessToken}`,
+            Authorization: `Bearer ${accessToken}`, // Set the access token as a Bearer token
           },
         })
           .then((response) => {
@@ -163,27 +199,24 @@ function HomePage() {
             }
             return response.json();
           })
-          .then((data) => {
-            // Handle the fetched user details
-            // console.log("User details:", data);
-            // Set the user data in state
-            setUser(data);
+          .then((response) => {
+            console.log(response);
+
+            setUser(response);
           })
           .catch((error) => {
-            console.error(error);
-            // ... Handle error fetching user details
+            console.log(error);
           });
       } catch (error) {
         console.error("Failed to decode access token", error);
-        // ... Handle error decoding access token
       }
     } else {
       console.error("Access token not found in localStorage");
-      // ... Handle access token not found
     }
-  }, []); // Empty dependency array to ensure useEffect runs only once
+  }, []);
 
-  console.log(Post);
+  console.log(user);
+
   return (
     <>
       <Navigation />
@@ -195,19 +228,18 @@ function HomePage() {
                 <div className="home__profile-bg"></div>
                 <div className="home__profile-image">
                   <Link to="/profile">
-                    <img
-                      src="https://images.pexels.com/photos/16161517/pexels-photo-16161517.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
-                      alt=""
-                    />
+                    {user && user.seeker && user.seeker.avatar && (
+                      <img src={user.seeker.avatar} alt="" />
+                    )}
                   </Link>
                 </div>
               </div>
               <div className="home__profile-content">
                 <div className="home__profile-title">
-                  {user && user[0] ? (
+                  {user?.seeker?.full_name ? (
                     <>
-                      <h4>{user[0].full_name} </h4>
-                      <span>{user[0].email} </span>
+                      <h4>{user.seeker.full_name} </h4>
+                      <span>{user.seeker.email} </span>
                     </>
                   ) : (
                     <>
@@ -237,116 +269,7 @@ function HomePage() {
                           className="modal__body"
                           style={{ overflowY: "auto", textAlign: "center" }}
                         >
-                          <form action="" className="form__modal">
-                            <div className="form__group">
-                              <div className="form__group-header">
-                                <BiUser />
-                                <label htmlFor="">Enter Full Name</label>
-                              </div>
-                              <div className="form__group-input">
-                                <input
-                                  type="text"
-                                  placeholder="Enter your full name"
-                                  name="full-name"
-                                />
-                              </div>
-                            </div>
-                            <div className="form__group">
-                              <div className="form__group-header">
-                                <MdOutlineMarkEmailUnread />
-                                <label htmlFor="">Email</label>
-                              </div>
-                              <div className="form__group-input">
-                                <input
-                                  type="text"
-                                  placeholder="Enter your current email"
-                                  name="email"
-                                />
-                              </div>
-                            </div>
-                            <div className="form__group">
-                              <div className="form__group-header">
-                                <BiUserCircle />
-                                <label htmlFor="">Avatar</label>
-                              </div>
-                              <div className="form__group-input">
-                                <input type="file" name="avatar" />
-                              </div>
-                            </div>
-                            <div className="form__group">
-                              <div className="form__group-header">
-                                <HiOutlineLocationMarker />
-                                <label htmlFor="">Location</label>
-                              </div>
-                              <div className="form__group-input">
-                                <input
-                                  type="text"
-                                  placeholder="Enter your current Location"
-                                  name="location"
-                                />
-                              </div>
-                            </div>
-                            <div className="form__group">
-                              <div className="form__group-header">
-                                <GrUserWorker />
-                                <label htmlFor="">Preferred Job</label>
-                              </div>
-                              <div className="form__group-input">
-                                <input
-                                  type="text"
-                                  placeholder="Enter your preferred job"
-                                  name="preferred-job"
-                                />
-                              </div>
-                            </div>
-                            <div className="form__group">
-                              <div className="form__group-header">
-                                <AiOutlineFieldTime />
-                                <label htmlFor="">Availability</label>
-                              </div>
-                              <div className="form__group-input">
-                                <input
-                                  type="text"
-                                  placeholder="How soon can you receive job opportunities"
-                                  name="available"
-                                />
-                              </div>
-                            </div>
-                            <div className="form__group">
-                              <div className="form__group-header">
-                                <BsCashStack />
-                                <label htmlFor="">Anticipated salary</label>
-                              </div>
-                              <div className="form__group-input">
-                                <input
-                                  type="number"
-                                  placeholder="Anticipated salary"
-                                  name="salary"
-                                />
-                              </div>
-                            </div>
-                            <div className="form__group">
-                              <div className="form__group-header">
-                                <BsTelephone />
-                                <label htmlFor="">Phone number</label>
-                              </div>
-                              <div className="form__group-input">
-                                <input
-                                  type="text"
-                                  placeholder="Enter your current phone number"
-                                  name="phone-number"
-                                />
-                              </div>
-                            </div>
-                            <div className="form__group-button">
-                              <button
-                                type="submit"
-                                className="form__group-save"
-                              >
-                                Save
-                              </button>
-                            </div>
-                          </form>
+                          <SeekersList />
                         </div>
                       </Modal>
                     </div>
@@ -381,10 +304,9 @@ function HomePage() {
               <div className="home__create-post">
                 <div className="create__posts">
                   <div className="create__posts-avatar">
-                    <img
-                      src="https://images.pexels.com/photos/16161517/pexels-photo-16161517.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
-                      alt=""
-                    />
+                  {user && user.seeker && user.seeker.avatar && (
+                      <img src={user.seeker.avatar} alt="" />
+                    )}
                   </div>
                   <div className="create__posts-input">
                     <form action="" className="form">
@@ -437,39 +359,94 @@ function HomePage() {
             <div className="posts__lists">
               {Array.isArray(posts) &&
                 posts.map((post) => (
-                  <article className="posts__lists-card" key={post.id}>
-                    <div className="posts__card-profile">
+                  <article
+                    className="posts__lists-card"
+                    style={{
+                      width: "100%",
+                      marginTop: "6px",
+                    }}
+                    key={post.id}
+                  >
+                    <div
+                      className="posts__card-profile"
+                      style={{ padding: "2px", height: "auto" }}
+                    >
                       <div className="card__profile-avatar">
-                        <img
-                          src="https://images.pexels.com/photos/14041401/pexels-photo-14041401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                          alt=""
-                        />
+                        {post.seeker && post.seeker.avatar ? (
+                          <img src={post.seeker.avatar} alt="" />
+                        ) : (
+                          <img
+                            src="default-avatar.jpg" // or a default avatar image URL
+                            alt=""
+                          />
+                        )}
+
                         <Post />
                       </div>
                       <div className="card__profile-about">
-                        <h5>Mid-Senior Software Engineer</h5>
+                        <h5>{post.title}</h5>
                         <small>Nairobi, Kenya</small>
                       </div>
                     </div>
                     <div className="profile__card-posts">
-                      <div className="posts__card-content">
-                        <small>{post.description}</small>
+                      <div className="posts__card-content col-md-6">
+                        <small style={{ marginBottom: "3px" }}>
+                          {post.description}
+                        </small>
                       </div>
-                      <div className="posts__card-image">
-                        <img className="img-fluid" src={post.media} alt="" style={{display:"block", height:'250px', width:"250px"}} />
+                      <div className="posts__card-image col-md-6">
+                        <img
+                          className="img-fluid"
+                          src={post.media}
+                          alt=""
+                          style={{
+                            display: "block",
+                            height: "520px",
+                            width: "100%",
+                            objectFit: "cover",
+                            objectPosition: "50% 60%",
+                          }}
+                        />
                       </div>
+
                       <div className="posts__card-buttons">
                         <div className="buttons__like-card">
-                          <button className="like">
-                            <SlLike />
+                        <button style={{color:"black"}}  className="like">
+                            comments  
+                            {/* iterate through comments here */}
                           </button>
-                          <h5>{post.likes}</h5>
+                          
                         </div>
                         <div className="buttons__comment-card">
                           <button className="comment">
-                            <FaRegCommentAlt />
+                          <FaRegCommentAlt onClick={openModal2}/>
+                            <Modal
+                                  isOpen={modalIsOpen2}
+                                  onRequestClose={closeModal2}
+                                  style={customStyles}
+                                >
+                                  <div className="modal__header">
+                                    <strong ref={(_subtitle) => (subtitle = _subtitle)}>Comments</strong>
+                                  </div>
+                                  <div
+                                    className="modal__body"
+                                    style={{ overflow: "scroll", textAlign: "center" }}
+                                  >
+                                    {Array.isArray(posts) &&
+                                      posts.map((post) => (
+                                        <article className="modal2__card">
+                                          {post.comments &&
+                                            post.comments.map((comment) => (
+                                              <p key={comment.id}>{comment.content}</p>
+                                            ))}
+                                        </article>
+                                      ))}
+                                  </div>
+                                </Modal>
                           </button>
-                          <h5>Comment</h5>
+                          <div>
+                            <Comments postCode={post.post_code}/>
+                          </div>
                         </div>
                       </div>
                     </div>

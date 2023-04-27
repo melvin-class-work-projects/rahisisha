@@ -10,7 +10,7 @@ function CommentForm(props) {
       headers: { 'Authorization': `Bearer ${props.token}` },
       body: JSON.stringify({ content: content, post_code: props.postCode, user_code: props.userCode })
     };
-    fetch('https://rahisisha-backend-3t0w.onrender.com/comments', requestOptions)
+    fetch('http://127.0.0.1:3000/comments', requestOptions)
       .then(response => response.json())
       .then(data => {
         console.log(data);
