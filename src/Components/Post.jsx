@@ -1,17 +1,27 @@
 
 import React, { useState, useEffect } from 'react';
 import Comments from './Comments';
-
+//import jwt_decode from 'jwt-decode';
+//mport jwt from 'jsonwebtoken';
 
 function Post() {
   const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState({ title: '', media: '', description: '' });
-
+  const token = localStorage.getItem('accessToken');
+  localStorage.setItem('accessToken', 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2Vla2VyIiwidXNlcl9yZWYiOiJmYjd2LWoybXQtdm54eSIsImV4cCI6MTY4MjQyNjExOX0.djHIpRUNvqGBQ9FTSKrl99Gt39QP0GaEsrkbpeLTh5E');
+  //const decodedToken = jwt.verify(token, 'eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2Vla2VyIiwidXNlcl9yZWYiOiJmYjd2LWoybXQtdm54eSIsImV4cCI6MTY4MjQyNjExOX0.djHIpRUNvqGBQ9FTSKrl99Gt39QP0GaEsrkbpeLTh5E');
+  console.log(decodedToken);
+  //const token = localStorage.getItem('accessToken');
+  const user = jwt_decode(token);
+  
+  // You can now access the user information in the user object, e.g.
+  console.log(user.role);
   useEffect(() => {
-    fetch('/posts', {
+    fetch('http://localhost:3000/posts', {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
       }
     })
       .then(response => response.json())
@@ -25,11 +35,12 @@ function Post() {
   const handleNewPostSubmit = (event) => {
     event.preventDefault();
 
-    fetch('http://localhost:3001/posts', {
+    fetch('http://localhost:3000/posts', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
       },
       body: JSON.stringify(newPost),
     })
@@ -45,6 +56,7 @@ function Post() {
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('accessToken')}`,
       },
       body: JSON.stringify(updatedPost),
     })
@@ -60,7 +72,7 @@ function Post() {
   };
 
   const handlePostDelete = (postCode) => {
-    fetch(`http://127.0.0.1:3000//posts/${postCode}`, {
+    fetch(`http://localhost:3000/posts/${postCode}`, {
       method: 'DELETE',
     })
       .then(() => {
@@ -91,7 +103,7 @@ function Post() {
         <button type="submit">Create Post</button>
       </form>
       <ul>
-        {posts.map(post => (
+        { Array.isArray(posts) && posts.map(post => (
           <li key={post.post_code}>
             <h2>{post.title}</h2>
             <p>{post.description}</p>

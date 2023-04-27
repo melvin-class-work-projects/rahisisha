@@ -1,15 +1,10 @@
-
-import React from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import './SeekersList.css';
-
+import { React, useState } from "react";
+import axios from "axios";
+import { BiUserCircle } from "react-icons/bi";
 
 import { GrUserWorker } from "react-icons/gr";
 import { AiOutlineFieldTime } from "react-icons/ai";
 import { BsCashStack } from "react-icons/bs";
-
-  componentDidMount() {
-    fetch('http://127.0.0.1:3000/seekers', {
 
 import { MdOutlineMarkEmailUnread } from "react-icons/md";
 import { HiOutlineLocationMarker } from "react-icons/hi";
@@ -91,7 +86,6 @@ const SeekersList = () => {
     // Fetch API to send form data with user_code
     fetch("http://127.0.0.1:3000/seekers", {
       method: "POST",
-
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${accessToken}`, // Include user_code in Authorization header
@@ -116,30 +110,31 @@ const SeekersList = () => {
     console.log(updatedFormValues);
   };
 
-    return (
-      <div>
-        <h1>Seekers</h1>
-        <table className="table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Location</th>
-            </tr>
-          </thead>
-          <tbody>
-            {seekers.map(seeker => (
-              <tr key={seeker.id}>
-                <td>{seeker.id}</td>
-                <td>{seeker.full_name}</td>
-                <td>{seeker.email}</td>
-                <td>{seeker.location}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
+  return (
+    <form
+      action=""
+      className="form__modal"
+      style={{
+        maxWidth: "400px",
+        margin: "0 auto",
+        border: "2px solid black",
+        padding: "5px",
+      }}
+    >
+      <div className="form__group">
+        <div className="form__group-header">
+          <BiUser />
+          <label htmlFor="">Enter Full Name</label>
+        </div>
+        <div className="form__group-input">
+          <input
+            type="text"
+            placeholder="Enter your full name"
+            name="full_name"
+            value={formValues.full_name}
+            onChange={handleChange}
+          />
+        </div>
       </div>
 
       <div className="form__group">

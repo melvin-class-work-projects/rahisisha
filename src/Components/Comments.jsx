@@ -1,86 +1,36 @@
-import React, { useState, useEffect } from "react";
-import { FaRegCommentAlt } from "react-icons/fa";
-import Comment from "./Comments";
+import { useState } from 'react';
 
-function Comments({ postCode }) {
-  const [comments, setComments] = useState([]);
-  const [content, setContent] = useState("");
+function CommentForm(props) {
+  const [content, setContent] = useState('');
 
-  useEffect(() => {
-    fetchComments();
-  }, []);
-
-  const fetchComments = async () => {
-    const response = await fetch(`http://localhost:3000/post_comments?post_code=${postCode}`);
-    const data = await response.json();
-    setComments(data);
-  };
-
-  const handleCreateComment = async (updatedData) => {
-    const comment = {
-      name: updatedData.name,
-      content: updatedData.content,
-      post_code: postCode,
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Authorization': `Bearer ${props.token}` },
+      body: JSON.stringify({ content: content, post_code: props.postCode, user_code: props.userCode })
     };
-    const response = await fetch("http://localhost:3000/comments", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(comment),
-    });
-    const data = await response.json();
-    setComments([...comments, data]);
-  };
-
-  const handleUpdateComment = async (id, updatedComment) => {
-    const response = await fetch(`http://localhost:3000/comments/${id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updatedComment),
-    });
-    const data = await response.json();
-    const updatedComments = comments.map((comment) => {
-      if (comment.id === data.id) {
-        return data;
-      }
-      return comment;
-    });
-    setComments(updatedComments);
-  };
-
-  const handleDeleteComment = async (id) => {
-    await fetch(`http://localhost:3000/comments/${id}`, {
-      method: "DELETE",
-    });
-    const updatedComments = comments.filter((comment) => comment.id !== id);
-    setComments(updatedComments);
+    fetch('https://rahisisha-backend-3t0w.onrender.com/comments', requestOptions)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        props.onCommentCreated(data);
+      });
   };
 
   return (
-    <div>
-      <div className="buttons__comment-card">
-        <Comment setComment={handleCreateComment} />
-        <h5>Comment</h5>
-      </div>
-      <ul>
-        {comments.map((comment) => (
-          <li key={comment.id}>
-            <p>{comment.content}</p>
-            <button onClick={() => handleDeleteComment(comment.id)}>Delete</button>
-            <button onClick={() => handleUpdateComment(comment.id, { content: "updated content" })}>
-              Update
-            </button>
-          </li>
-        ))}
-      </ul>
-    </div>
+    <form onSubmit={handleSubmit}>
+      <label>
+        Comment:
+        <input type="text" value={content} onChange={e => setContent(e.target.value)} />
+      </label>
+      <button type="submit">Submit</button>
+    </form>
   );
 }
 
-export default Comments;
+export default CommentForm;
+
 
 
 

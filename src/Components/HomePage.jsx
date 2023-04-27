@@ -20,11 +20,8 @@ import Modal from "react-modal";
 import Popup from "reactjs-popup";
 import { Link } from "react-router-dom";
 import Navigation from "./Navigation";
-
-import Comments from "./Comments";
-
-const postCode = "12345";
-
+import Post from "./Post";
+import axios from "axios";
 
 const customStyles = {
   content: {
@@ -42,63 +39,57 @@ const customStyles = {
 function HomePage() {
   let subtitle;
   const [modalIsOpen, setIsOpen] = useState(false);
-  const [posts, setPosts] = useState([]);
+  const [posts, setPost] = useState([]);
   const [authenticated, setAuthenticated] = useState(false);
   const [description, setDescription] = useState("");
   const [file, setFile] = useState(null);
 
- 
-
   const [user, setUser] = useState([]);
-
   useEffect(() => {
-    const accessToken = localStorage.getItem("accessToken");
-    console.log(accessToken);
-    if (accessToken) {
-      setAuthenticated(true);
-      fetch("http://127.0.0.1:3000/posts", {
-        headers: {
-          Authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw new Error("Network response was not ok");
-          }
-        })
-        .then((data) => setPosts(data))
-        .catch((error) => console.log(error));
-    } else {
-      setAuthenticated(false);
-    }
+    const getPosts = async () => {
+      try {
+        // Get the access token from localStorage
+        const accessToken = localStorage.getItem("eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoic2Vla2VyIiwidXNlcl9yZWYiOiJmYjd2LWoybXQtdm54eSIsImV4cCI6MTY4MjQyNjExOX0.djHIpRUNvqGBQ9FTSKrl99Gt39QP0GaEsrkbpeLTh5");
 
-    if (accessToken) {
-      setAuthenticated(true);
-      const [, payloadBase64] = accessToken.split(".");
-      const payload = JSON.parse(atob(payloadBase64));
-      const userId = payload.user_ref; // extracting the user ID from the access token payload
+        // Make sure the access token is present
+        if (!accessToken) {
+          // Handle the case when access token is not available
+          console.error("Access token not found in localStorage");
+          return;
+        }
 
-      fetch(`http://127.0.0.1:3000/users/${userId}`, {
-        headers: {
+        // Set the authorization header with the access token
+        const headers = {
           Authorization: `Bearer ${accessToken}`,
-        },
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          } else {
-            throw new Error("Network response was not ok");
-          }
-        })
-        .then((data) => setUser(data.username))
-        .catch((error) => console.log(error));
-    } else {
-      setAuthenticated(false);
-    }
+        };
+
+        // Make GET request to '/posts' with authorization header
+        const response = await fetch("http://127.0.0.1:3000/posts", { headers });
+
+        // Check if the response is successful
+        if (!response.ok) {
+          // Handle the case when response is not successful
+          throw new Error(
+            `Error fetching posts: ${response.status} ${response.statusText}`
+          );
+        }
+
+        // Parse the response data as JSON
+        const data = await response.json();
+
+        // Set the response data to state
+        setPost(data);
+      } catch (error) {
+        // Handle any error that occurred during the API request
+        console.error(error);
+      }
+    };
+
+    // Call the getPosts function
+    getPosts();
   }, []);
-  
+
+  console.log(Post);
 
   const openModal = () => {
     setIsOpen(true);
@@ -192,266 +183,8 @@ function HomePage() {
     }
   }, []); // Empty dependency array to ensure useEffect runs only once
 
-
-
-  console.log(user)
+  console.log(Post);
   return (
-
-   <>
-      <Navigation/>
-     <section className="home__page">
-       <div className="home__page-container">
-         <aside className="home__page-profile">
-           <article className="home__profile-info">
-             <div className="home__profile-top">
-               <div className="home__profile-bg"></div>
-               <div className="home__profile-image">
-                 <Link to="/profile">
-                   <img
-                     src="https://images.pexels.com/photos/16161517/pexels-photo-16161517.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
-                     alt=""
-                   />
-                 </Link>
-               </div>
-             </div>
-             <div className="home__profile-content">
-               <div className="home__profile-title">
-                 <h4>Jane Doe</h4>
-                 <span>Software Engineer</span>
-               </div>
-               <div className="home__profile-body">
-                 <div className="profile__body-icon">
-                   <div className="icon__profile">
-                     <AiFillEdit />
-                   </div>
-                   <div className="content__profile">
-                     <strong onClick={openModal}>Edit Profile</strong>
-                     <Modal
-                       isOpen={modalIsOpen}
-                       onRequestClose={closeModal}
-                       style={customStyles}
-                     >
-                       <div className="modal__header">
-                         <strong ref={(_subtitle) => (subtitle = _subtitle)}>
-                           Edit Your Profile
-                         </strong>
-                       </div>
-                       <div className="modal__body">
-                         <form action="" className="form__modal">
-                           <div className="form__group">
-                             <div className="form__group-header">
-                               <BiUser />
-                               <label htmlFor="">Enter Full Name</label>
-                             </div>
-                             <div className="form__group-input">
-                               <input
-                                 type="text"
-                                 placeholder="Enter your current email"
-                               />
-                             </div>
-                           </div>
-                           <div className="form__group">
-                             <div className="form__group-header">
-                               <MdOutlineMarkEmailUnread />
-                               <label htmlFor="">Email</label>
-                             </div>
-                             <div className="form__group-input">
-                               <input
-                                 type="text"
-                                 placeholder="Enter your current email"
-                               />
-                             </div>
-                           </div>
-                           <div className="form__group">
-                             <div className="form__group-header">
-                               <HiOutlineLocationMarker />
-                               <label htmlFor="">Location</label>
-                             </div>
-                             <div className="form__group-input">
-                               <input
-                                 type="text"
-                                 placeholder="Enter your current email"
-                               />
-                             </div>
-                           </div>
-                           <div className="form__group">
-                             <div className="form__group-header">
-                               <BsTelephone />
-                               <label htmlFor="">Phone number</label>
-                             </div>
-                             <div className="form__group-input">
-                               <input
-                                 type="text"
-                                 placeholder="Enter your current email"
-                               />
-                             </div>
-                           </div>
-                           <div className="form__group-button">
-                             <button className="form__group-save">Save</button>
-                           </div>
-                         </form>
-                       </div>
-                     </Modal>
-                   </div>
-                 </div>
-                 <div className="profile__body-icon">
-                   <div className="icon__profile">
-                     <HiOutlineUsers />
-                   </div>
-                   <div className="content__profile">
-                     <Link to="/community">Community</Link>
-                   </div>
-                 </div>
-                 <div className="profile__body-icon">
-                   <div className="icon__profile">
-                     <HiOutlineUsers />
-                   </div>
-                   <div className="content__profile">
-                     <Link to="/notification">Notifications</Link>
-                   </div>
-                 </div>
-               </div>
-             </div>
-             <div className="profile__log-out">
-               <button className="button-lg"  onClick={handleLogout}>Log Out</button>
-             </div>
-           </article>
-         </aside>
-         <div className="homepage__posts">
-           <div className="home__page-posts">
-             <div className="home__create-post">
-               <div className="create__posts">
-                 <div className="create__posts-avatar">
-                   <img
-                     src="https://images.pexels.com/photos/16161517/pexels-photo-16161517.jpeg?auto=compress&cs=tinysrgb&w=400&lazy=load"
-                     alt=""
-                   />
-                 </div>
-                 <div className="create__posts-input">
-                   <form action="" className="form">
-                     <input type="Create a post" />
-                     <button type="submit">Post</button>
-                   </form>
-                 </div>
-               </div>
-               <div className="create__post-types">
-                 <div className="posts__icon-video">
-                   <BsPlayCircle />
-                   <Popup trigger={<small>Videos</small>} position="center" className="my-popup">
-                     <div className="popup_body">
-                       <div className="popup_body-header">
-                         <h5>Video Posts</h5>
-                       </div>
-                       <div className="popup_form">
-                         <form action="" className="popup_form">
-                           <div className="popup_form-input">
-                             <input type="text" placeholder="Write a description"/>
-                             <input type="file" name="" id="" required/>
-                           </div>
-                           <div className="form__group-button">
-                             <button className="form__group-save">Save</button>
-                           </div>
-                         </form>
-                       
-                       </div>
-                     </div>
-                   </Popup>
-                 </div>
-                 <div className="posts__icon-photo">
-                   <TbPhotoCheck />
-                   <Popup trigger={<small>Photos</small>} position="center" className="my-popup">
-                     <div className="popup_body">
-                       <div className="popup_body-header">
-                         <h5>Photo Posts</h5>
-                       </div>
-                       <div className="popup_form">
-                         <form action="" className="popup_form">
-                           <div className="popup_form-input">
-                             <input type="text" placeholder="Write a description"/>
-                             <input type="file" name="" id="" required/>
-                           </div>
-                           <div className="form__group-button">
-                             <button className="form__group-save">Save</button>
-                           </div>
-                         </form>
-                       
-                       </div>
-                     </div>
-                   </Popup>
-                 </div>
-                 <div className="posts__icon-date">
-                   <BiCalendar />
-                   <Popup trigger={<small>Events</small>} position="center" className="my-popup">
-                     <div className="popup_body">
-                       <div className="popup_body-header">
-                         <h5>Date Posts</h5>
-                       </div>
-                       <div className="popup_form">
-                         <form action="" className="popup_form">
-                           <div className="popup_form-input">
-                             <input type="text" placeholder="Write a description"/>
-                             <input type="date" name="" id="" required/>
-                           </div>
-                           <div className="form__group-button">
-                             <button className="form__group-save">Save</button>
-                           </div>
-                         </form>
-                       
-                       </div>
-                     </div>
-                   </Popup>
-                 </div>
-               </div>
-             </div>
-           </div>
-           <div className="posts__lists">
-             {Array.isArray(posts) &&
-               posts.map((post) => (
-                 <article className="posts__lists-card" key={post.id}>
-                   <div className="posts__card-profile">
-                     <div className="card__profile-avatar">
-                       <img
-                         src="https://images.pexels.com/photos/14041401/pexels-photo-14041401.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                         alt=""
-                       />
-                     </div>
-                     <div className="card__profile-about">
-                       <h5>Mid-Senior Software Engineer</h5>
-                       <small>Nairobi, Kenya</small>
-                     </div>
-                   </div>
-                   <div className="profile__card-posts">
-                     <div className="posts__card-content">
-                       <small>{post.description}</small>
-                     </div>
-                     <div className="posts__card-image">
-                       <img src={post.media} alt="" />
-                     </div>
-                     <div className="posts__card-buttons">
-                       <div className="buttons__like-card">
-                         <button className="like">
-                           <SlLike />
-                         </button>
-                         <h5>{post.likes}</h5>
-                       </div>
-                       <div className="buttons__comment-card">
-                           <button className="comment">
-                           <FaRegCommentAlt />
-                            </button>
-                           <h5>Comment</h5>
-                             <Comments postCode={postCode} />
-                     </div>
-                     </div>
-                   </div>
-                 </article>
-               ))}
-           </div>
-         </div>
-       </div>
-     </section>
-   </>
- );
-}
     <>
       <Navigation />
       <section className="home__page">
@@ -470,15 +203,18 @@ function HomePage() {
                 </div>
               </div>
               <div className="home__profile-content">
-
-              <div className="home__profile-title">
-                {user && user[0] ? (
-                  <>
-                    <h4>{user[0].full_name} </h4>
-                    <span>{user[0].email} </span>
-                  </>
-                ) : (
-  
+                <div className="home__profile-title">
+                  {user && user[0] ? (
+                    <>
+                      <h4>{user[0].full_name} </h4>
+                      <span>{user[0].email} </span>
+                    </>
+                  ) : (
+                    <>
+                      <h4>Loading...</h4>
+                    </>
+                  )}
+                </div>
 
                 <div className="home__profile-body">
                   <div className="profile__body-icon">
@@ -637,8 +373,6 @@ function HomePage() {
                 <button className="button-lg" onClick={handleLogout}>
                   Log Out
                 </button>
-
-               
               </div>
             </article>
           </aside>
@@ -695,7 +429,7 @@ function HomePage() {
                   </div>
                   <div className="posts__icon-date">
                     <BiCalendar />
-                   <small>Events</small>
+                    <small>Events</small>
                   </div>
                 </div>
               </div>
@@ -722,7 +456,7 @@ function HomePage() {
                         <small>{post.description}</small>
                       </div>
                       <div className="posts__card-image">
-                        <img src={post.image} alt="" />
+                        <img className="img-fluid" src={post.media} alt="" style={{display:"block", height:'250px', width:"250px"}} />
                       </div>
                       <div className="posts__card-buttons">
                         <div className="buttons__like-card">

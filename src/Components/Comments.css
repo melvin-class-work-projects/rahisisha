@@ -1,0 +1,27 @@
+.buttons__comment-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+  
+  .buttons__comment-card h5 {
+    margin-left: 1rem;
+  }
+  
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  li {
+    margin-bottom: 1rem;
+  }
+  
+  li p {
+    margin: 0;
+  }
+  
+  li button {
+    margin-right: 0.5rem;
+  }
+  
